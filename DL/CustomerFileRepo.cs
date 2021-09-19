@@ -1,15 +1,26 @@
 using System;
 using System.Collections.Generic;
 using Models;
+using System.IO;
+using System.Text.Json;
+using System.Linq;
 
 namespace DL
 {
     public class CustomerFileRepo : ICustomerRepo
     {
-        public Customer AddCustomer(Customer customer)
-        {
+        private const string filePath = "../DL/Customers.json";
 
-            throw new System.NotImplementedException();
+        private string jsonString;
+        public Customer AddCustomer(Customer customer)
+        {   
+            //Get all customer from the file as Lists
+            List<Customer> allCustomer = GetAllCustomers();
+            allCustomer.Add(customer);
+
+            jsonString = JsonSerializer.Serialize(allCustomer);
+            File.WriteAllText(filePath, jsonString);
+            return customer;
         }
 
         public void DeleteCustomer(string email)
@@ -19,7 +30,10 @@ namespace DL
 
         public List<Customer> GetAllCustomers()
         {
-            throw new System.NotImplementedException();
+            //read the file from the file path
+            jsonString = File.ReadAllText(filePath);
+            //translate the serialized string into List<Customer> object!
+            return JsonSerializer.Deserialize<List<Customer>>(jsonString);
         }
 
         public void UpdateCustomer(Customer customer)

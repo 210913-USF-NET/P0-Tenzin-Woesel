@@ -9,11 +9,11 @@ namespace UI
 {
     public class MainMenu : IMenu
     {
-        // private IBL _bl;
-        // public MainMenu(IBL bl)
-        // {
-        //     _bl = bl;
-        // }
+        private IBL _bl;
+        public MainMenu(IBL bl)
+        {
+            _bl = bl;
+        }
         public void Start()
         {
             Console.WriteLine("This is the Main Menu");
@@ -32,7 +32,8 @@ namespace UI
                         CurrentCustomer();
                         break;
                     case "1":
-                        new NewUserMenu(new BL(RAMCustomerRepo.GetInstance())).Start();
+                        // new NewUserMenu(new BL(RAMCustomerRepo.GetInstance())).Start();
+                        new NewUserMenu(new BL(new CustomerFileRepo())).Start();
                         break;
                     case "2":
                         JustBrowse();

@@ -67,6 +67,7 @@ namespace UI
                 Console.WriteLine("We are here");
                 Console.WriteLine("Order is " + item.ToString());
             }
+            _bl.AddCustomer(customer);
 
             Console.WriteLine(customer);
         }
