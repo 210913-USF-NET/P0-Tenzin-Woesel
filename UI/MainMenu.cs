@@ -1,11 +1,19 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using StoreBL;
+using DL;
 using Models;
 
 namespace UI
 {
     public class MainMenu : IMenu
     {
+        // private IBL _bl;
+        // public MainMenu(IBL bl)
+        // {
+        //     _bl = bl;
+        // }
         public void Start()
         {
             Console.WriteLine("This is the Main Menu");
@@ -24,7 +32,7 @@ namespace UI
                         CurrentCustomer();
                         break;
                     case "1":
-                        CreateUser();
+                        new NewUserMenu(new BL(RAMCustomerRepo.GetInstance())).Start();
                         break;
                     case "2":
                         JustBrowse();
@@ -47,40 +55,15 @@ namespace UI
         {
             Console.WriteLine("Please enter your username");
             string userName = Console.ReadLine();
-            
+
             //Get the lists of customers from the DB and check if this Name is available
             List<String> customerNames = new List<string> { "tenzin", "woesel" };
-            
+
             if (customerNames.Contains(userName))
             {
                 // then show the list of items and let them add items to cart
             }
         }
-
-        private void CreateUser()
-        {
-            // Console.WriteLine("Creating User");
-
-            // Console.WriteLine("Enter your name: ");
-            // string name = Console.ReadLine();
-            // Console.WriteLine("Enter Address: ");
-            // string address = Console.ReadLine();
-            // Console.WriteLine("Enter Email Adress :");
-            // string email = Console.ReadLine();
-
-            // List<Order> orders = new List<Order>();
-            // Order order = new Order(1.23M);
-            // orders.Add(order);
-            // Customer customer = new Customer(name, address, email);
-            // customer.Order = orders;
-            // foreach (var item in orders)
-            // {
-            //     Console.WriteLine(item);
-            // }
-            // Console.WriteLine(customer);
-
-        }
-
         private void JustBrowse()
         {
             //if user choses this then get the List<Items> and display to user

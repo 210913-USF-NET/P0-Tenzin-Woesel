@@ -5,11 +5,15 @@ namespace Models
 {
     public class Order
     {
-        public Order(){}
-        public Order(decimal total)
+        // public Order(){}
+        public Order(decimal total) : this()
         {
             this.Total = total;
+        }
 
+        public Order()
+        {
+            this.LineItems = new List<LineItems>();
         }
         /*
             The orders contain information about customer orders.

@@ -10,16 +10,15 @@ namespace UI
             string userInput = "";
             do
             {
-                Console.WriteLine("These are store items.");
+                Console.WriteLine("****** Snow Lion Stores ******");
                 //Show the lists of items and then show the options of adding to cart
-                Console.WriteLine("[1] Show product details.");
-                Console.WriteLine("[2] Add item to Cart.");
+                Console.WriteLine("[1] Select a Store");
                 Console.WriteLine("[x] Back to Main Menu.");
 
                 switch (userInput)
                 {
                     case "1":
-                        ProductDetails();
+                        ListOfStores();
                         break;
                     case "x":
                         Console.WriteLine("Go back");
@@ -34,9 +33,9 @@ namespace UI
             } while (!exit);
         }
 
-        private void ProductDetails()
+        private void ListOfStores()
         {
-            //Bring in the details of the product chosen
+            //Show the user a list of stores to choose from.
         }
     }
 }

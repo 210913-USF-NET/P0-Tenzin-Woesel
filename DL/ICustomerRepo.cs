@@ -6,12 +6,13 @@ namespace DL
 {
     public interface ICustomerRepo
     {
-        Customer AddCustomer();
+        Customer AddCustomer(Customer customer);
+        Customer GetCustomer(string email);
 
         List<Customer> GetAllCustomers();
 
-        void DeleteCustomer();
+        void DeleteCustomer(string email);
 
-        void UpdateCustomer();
+        void UpdateCustomer(Customer customer);
     }
 }

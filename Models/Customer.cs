@@ -7,6 +7,11 @@ namespace Models
     {
         public Customer(){}
 
+        public Customer(string pinNum)
+        {
+            this.PinNum = pinNum;
+        }
+
         public Customer(string name, string address, string email)
         {
             this.Name = name;
@@ -24,6 +29,8 @@ namespace Models
         */
         public string Name { get; set; }
         public string Address { get; set; }
+
+        public string PinNum{get;}
         public string Email { get; set; }
         public List<Order> Order { get; set; }
 
