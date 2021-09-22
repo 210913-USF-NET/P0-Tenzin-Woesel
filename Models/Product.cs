@@ -3,6 +3,7 @@ namespace Models
     public class Product
     {
         public Product() { }
+        
         public Product(string name, decimal price, string description, string category)
         {
             this.Name = name;
@@ -20,8 +21,11 @@ namespace Models
                     • Category (optional)
         */
         public string Name { get; set; }
+
         public decimal Price { get; set; }
+        
         public string Description { get; set; }
+        
         public string Category { get; set; }
     }
 }

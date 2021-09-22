@@ -13,6 +13,8 @@ namespace DL
 
         void DeleteCustomer(string email);
 
-        void UpdateCustomer(Customer customer);
+        Customer UpdateCustomer(Customer customerToUpdate);
+
+        Customer AddAnOrder(Order order);
     }
 }

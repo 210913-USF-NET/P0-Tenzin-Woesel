@@ -9,11 +9,11 @@ namespace UI
 {
     public class MainMenu : IMenu
     {
-        private IBL _bl;
-        public MainMenu(IBL bl)
-        {
-            _bl = bl;
-        }
+        // private IBL _bl;
+        // public MainMenu(IBL bl)
+        // {
+        //     _bl = bl;
+        // }
         public void Start()
         {
             Console.WriteLine("This is the Main Menu");
@@ -33,7 +33,8 @@ namespace UI
                         break;
                     case "1":
                         // new NewUserMenu(new BL(RAMCustomerRepo.GetInstance())).Start();
-                        new NewUserMenu(new BL(new CustomerFileRepo())).Start();
+                        // new NewUserMenu(new BL(new CustomerFileRepo())).Start();
+                        MenuFactory.GetMenu("new user").Start();
                         break;
                     case "2":
                         JustBrowse();
@@ -58,12 +59,17 @@ namespace UI
             string userName = Console.ReadLine();
 
             //Get the lists of customers from the DB and check if this Name is available
-            List<String> customerNames = new List<string> { "tenzin", "woesel" };
+            // List<Customer> customer = _bl.GetAllCustomers();
 
-            if (customerNames.Contains(userName))
-            {
-                // then show the list of items and let them add items to cart
-            }
+            // if (customerNames.Contains(userName))
+            // {
+            //     // then show the list of items and let them add items to cart
+            // }
+            // foreach (Customer s in customer)
+            // {
+            //     Console.WriteLine(s);
+
+            // }
         }
         private void JustBrowse()
         {

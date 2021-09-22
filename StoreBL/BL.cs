@@ -8,6 +8,7 @@ namespace StoreBL
     public class BL : IBL
 
     {
+        
         private ICustomerRepo _repo;
 
         public BL(ICustomerRepo repo)
@@ -22,6 +23,11 @@ namespace StoreBL
         public Customer AddCustomer(Customer customer)
         {
             return _repo.AddCustomer(customer);
+        }
+
+        public Customer UpdateCustomer(Customer customerToUpdate)
+        {
+            return _repo.UpdateCustomer(customerToUpdate);
         }
     }
 }

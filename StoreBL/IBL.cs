@@ -8,5 +8,7 @@ namespace StoreBL
         List<Customer> GetAllCustomers();
 
         Customer AddCustomer(Customer customer);
+
+        Customer UpdateCustomer(Customer customerToUpdate);
     }
 }

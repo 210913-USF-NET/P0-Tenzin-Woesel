@@ -13,6 +13,7 @@ namespace UI
                 Console.WriteLine("****** Snow Lion Stores ******");
                 //Show the lists of items and then show the options of adding to cart
                 Console.WriteLine("[1] Select a Store");
+                Console.WriteLine("[2] Enter location.");
                 Console.WriteLine("[x] Back to Main Menu.");
 
                 switch (userInput)
@@ -36,6 +37,11 @@ namespace UI
         private void ListOfStores()
         {
             //Show the user a list of stores to choose from.
+        }
+
+        private void SearchByLocation()
+        {
+            //Get a location from the user and get the store corresponding to it.
         }
     }
 }

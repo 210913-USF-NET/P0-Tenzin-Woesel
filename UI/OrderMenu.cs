@@ -22,7 +22,9 @@ namespace UI
                 }
                 Console.WriteLine("[1] Add Item to cart");
                 Console.WriteLine("[2] Remove Item from cart.");
-                Console.WriteLine("[3] Go Back to Store Menu");
+                Console.WriteLine("[3] View Cart.");
+                Console.WriteLine("[4] Check out.");
+                Console.WriteLine("[5] Go Back to Store Menu");
                 Console.WriteLine("[x] Go Back to Main Menu");
                 userInput = Console.ReadLine();
                 switch (userInput)
@@ -34,8 +36,14 @@ namespace UI
                         RemoveItem();
                         break;
                     case "3":
+                        ViewCart();
                         break;
                     case "4":
+                        CheckOut();
+                        break;
+                    case "5":
+                        Console.WriteLine("Go back to previous menu.");
+                        goBack = true;
                         break;
                     default:
                         Console.WriteLine("Invalid Input.");
@@ -54,6 +62,15 @@ namespace UI
         private void RemoveItem()
         {
             
+        }
+
+        private void ViewCart()
+        {
+
+        }
+        private void CheckOut()
+        {
+
         }
 
         private List<Product> ListOfItems()

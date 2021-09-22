@@ -13,7 +13,7 @@ namespace DL
         {
             _customers = new List<Customer>()
             {
-                new Customer("1234")
+                new Customer()
                 {
                     Name = "Tenzin",
                     Address = "123",
@@ -32,9 +32,15 @@ namespace DL
 
             return _instance;
         }
+
+        /// <summary>
+        ///   Adds a new restaurant to the json file.
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
         public Customer AddCustomer(Customer customer)
         {
-            _customers.Add(customer);
+            // _customers.Add(customer);
             return customer;
         }
         public Customer GetCustomer(string email)
@@ -65,10 +71,16 @@ namespace DL
             return _customers;
         }
 
-        public void UpdateCustomer(Customer customer)
+        public Customer UpdateCustomer(Customer customerToUpdate)
         {
-            _customers.Remove(customer);
+            _customers.Add(customerToUpdate);
+            return customerToUpdate;
 
+        }
+
+        public Customer AddAnOrder(Order order)
+        {
+            throw new Exception();
         }
 
 

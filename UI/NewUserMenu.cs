@@ -31,10 +31,11 @@ namespace UI
                         CreateUser();
                         break;
                     case "2":
+                        GetAllCustomers();
                         exit = true;
                         break;
                     case "x":
-                        Console.WriteLine("Exit program.");
+                        Console.WriteLine("Go to main menu.");
                         exit = true;
                         break;
                     default:
@@ -47,29 +48,59 @@ namespace UI
         private void CreateUser()
         {
             Console.WriteLine("Creating User");
+            Customer cust = new Customer();
 
             Console.WriteLine("Enter your name: ");
             string name = Console.ReadLine();
             //if name is already in DB then promt user to give another name
+            cust.Name = name;
+
             Console.WriteLine("Enter Address: ");
             string address = Console.ReadLine();
-            Console.WriteLine("Enter Email Adress :");
+            cust.Address = address;
+
+        inputEmail:
+            Console.WriteLine("Enter Email Address :");
             string email = Console.ReadLine();
+            try
+            {
+                cust.Email = email;
+            }
+            catch (InputInvalidException e)
+            {
+                Console.WriteLine(e.Message);
+                goto inputEmail;
+            }
 
             List<Order> orders = new List<Order>();
             Order order = new Order(1.23M);
             order.LineItems = new List<LineItems>();
             orders.Add(order);
-            Customer customer = new Customer(name, address, email);
-            customer.Order = orders;
+            // Customer customer = new Customer(name, address, email);
+            // customer.Order = orders;
+            cust.Order = orders;
             foreach (var item in orders)
             {
                 Console.WriteLine("We are here");
                 Console.WriteLine("Order is " + item.ToString());
             }
-            _bl.AddCustomer(customer);
 
-            Console.WriteLine(customer);
+            _bl.AddCustomer(cust);
+            foreach (Order customer in cust.Order)
+            {
+                Console.WriteLine(customer);
+
+            }
+        }
+
+        private void GetAllCustomers()
+        {
+            List<Customer> customers = _bl.GetAllCustomers();
+            foreach (Customer cust in customers)
+            {
+                Console.WriteLine(cust);
+
+            }
         }
     }
 }

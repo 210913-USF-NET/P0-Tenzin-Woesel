@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using Serilog;
 
 namespace Models
 {
     public class Customer
     {
-        public Customer(){}
-
-        public Customer(string pinNum)
+        public Customer()
         {
-            this.PinNum = pinNum;
+            Log.Debug("Creating Customer");
         }
+
+        // public Customer(string pinNum)
+        // {
+        //     this.PinNum = pinNum;
+        // }
 
         public Customer(string name, string address, string email)
         {
@@ -28,10 +33,35 @@ namespace Models
                     • List of Orders
         */
         public string Name { get; set; }
+
         public string Address { get; set; }
 
-        public string PinNum{get;}
-        public string Email { get; set; }
+        // public string PinNum { get; }
+
+        private string _email;
+        public string Email
+        {
+            get
+            {
+                return _email;
+            }
+            set
+            {
+
+                if (value.Length == 0)
+                {
+                    InputInvalidException e = new InputInvalidException("Email address should not be empty");
+                    Log.Warning(e.Message);
+                    throw e;
+
+                }
+                else
+                {
+                    _email = value;
+                }
+            }
+        }
+
         public List<Order> Order { get; set; }
 
         public override string ToString()

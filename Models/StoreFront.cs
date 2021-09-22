@@ -5,6 +5,7 @@ namespace Models
     public class StoreFront
     {
         public StoreFront(){}
+
         public StoreFront(string name, string address, string inventory)
         {
             this.Name = name;
@@ -23,8 +24,11 @@ namespace Models
         */
 
         public string Name { get; set; }
+
         public string Address { get; set; }
+
         public string Inventory { get; set; }
+
         public List<Order> Order { get; set; }
 
         public override string ToString()
