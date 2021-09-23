@@ -6,7 +6,7 @@ namespace Models
     {
         public StoreFront(){}
 
-        public StoreFront(string name, string address, string inventory)
+        public StoreFront(string name, string address, Inventory inventory)
         {
             this.Name = name;
             this.Address = address;
@@ -22,12 +22,13 @@ namespace Models
                     • List of Orders
 
         */
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
         public string Address { get; set; }
 
-        public string Inventory { get; set; }
+        public Inventory Inventory { get; set; }
 
         public List<Order> Order { get; set; }
 

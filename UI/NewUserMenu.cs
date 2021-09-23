@@ -47,7 +47,8 @@ namespace UI
 
         private void CreateUser()
         {
-            Console.WriteLine("Creating User");
+            JustBorder();
+            Console.WriteLine("Creating User\n");
             Customer cust = new Customer();
 
             Console.WriteLine("Enter your name: ");
@@ -55,13 +56,14 @@ namespace UI
             //if name is already in DB then promt user to give another name
             cust.Name = name;
 
-            Console.WriteLine("Enter Address: ");
+            Console.WriteLine("\nEnter Address: ");
             string address = Console.ReadLine();
             cust.Address = address;
 
         inputEmail:
-            Console.WriteLine("Enter Email Address :");
+            Console.WriteLine("\nEnter Email Address :");
             string email = Console.ReadLine();
+            cust.Email = email;
             try
             {
                 cust.Email = email;
@@ -72,25 +74,10 @@ namespace UI
                 goto inputEmail;
             }
 
-            List<Order> orders = new List<Order>();
-            Order order = new Order(1.23M);
-            order.LineItems = new List<LineItems>();
-            orders.Add(order);
-            // Customer customer = new Customer(name, address, email);
-            // customer.Order = orders;
-            cust.Order = orders;
-            foreach (var item in orders)
-            {
-                Console.WriteLine("We are here");
-                Console.WriteLine("Order is " + item.ToString());
-            }
+            Customer addedCustomer = _bl.AddCustomer(cust);
+            JustBorder();
+            Console.WriteLine($"\nYou created {addedCustomer}");
 
-            _bl.AddCustomer(cust);
-            foreach (Order customer in cust.Order)
-            {
-                Console.WriteLine(customer);
-
-            }
         }
 
         private void GetAllCustomers()
@@ -98,9 +85,16 @@ namespace UI
             List<Customer> customers = _bl.GetAllCustomers();
             foreach (Customer cust in customers)
             {
+                JustBorder();
                 Console.WriteLine(cust);
-
+                JustBorder();
+                Console.WriteLine();
             }
+        }
+
+        private void JustBorder()
+        {
+            Console.WriteLine("==========================");
         }
     }
 }

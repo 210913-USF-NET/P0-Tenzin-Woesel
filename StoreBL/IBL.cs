@@ -10,5 +10,6 @@ namespace StoreBL
         Customer AddCustomer(Customer customer);
 
         Customer UpdateCustomer(Customer customerToUpdate);
+
     }
 }

@@ -9,7 +9,6 @@ namespace Models
     {
         public Customer()
         {
-            Log.Debug("Creating Customer");
         }
 
         // public Customer(string pinNum)
@@ -63,10 +62,11 @@ namespace Models
         }
 
         public List<Order> Order { get; set; }
+        public int Id { get; set; }
 
         public override string ToString()
         {
-            return $"Customer Name: {this.Name} \nAddress: {this.Address} \n Email:{this.Email} \n Order: {this.Order}";
+            return $"Customer ID: {this.Id}\nCustomer Name: {this.Name} \nAddress: {this.Address} \nEmail:{this.Email} \n";
         }
     }
 }

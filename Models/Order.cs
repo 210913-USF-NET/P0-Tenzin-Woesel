@@ -22,6 +22,7 @@ namespace Models
                     • Location (that the order was placed)
                     • Total price
         */
+        public int Id { get; set; }
         public List<LineItems> LineItems { get; set; }
         
         public decimal Total { get; set; }

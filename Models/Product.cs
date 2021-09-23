@@ -20,6 +20,7 @@ namespace Models
                     • Desc. (optional)
                     • Category (optional)
         */
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public decimal Price { get; set; }
@@ -27,5 +28,10 @@ namespace Models
         public string Description { get; set; }
         
         public string Category { get; set; }
+
+        public override string ToString()
+        {
+            return $"Product Id: {this.Id}\n Product Name: {this.Name}\nProduct Price: {this.Price}\nProduct Description: {this.Description}\n";
+        }
     }
 }
