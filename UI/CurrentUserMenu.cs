@@ -46,16 +46,17 @@ namespace UI
         private void ValidateUser()
         {
             Console.WriteLine("Enter your name");
-            List<Customer> allCustomers = _bl.SearchCustomer(Console.ReadLine());
+            string cName = Console.ReadLine();
+            List<Customer> allCustomers = _bl.SearchCustomer(cName);
 
             if(allCustomers == null || allCustomers.Count == 0)
             {
-                Console.WriteLine("No Customers :/");
+                Console.WriteLine("No such users :/");
                 return;
             }
-
-            Console.WriteLine("Welcome to your profile.");
-
+            
+            Console.WriteLine("Welcome to your profile." + cName);
+            MenuFactory.GetMenu("current user").Start();
         }
     }
 }

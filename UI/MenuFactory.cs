@@ -24,6 +24,8 @@ namespace UI
                     return new CurrentUserMenu(new BL(new DBCustomerRepo(context)));
                 case "new user":
                     return new NewUserMenu(new BL(new DBCustomerRepo(context)));
+                case "order menu":
+                    return new OrderMenu(new BL(new DBCustomerRepo(context)));
                 default:
                     return null;
             }

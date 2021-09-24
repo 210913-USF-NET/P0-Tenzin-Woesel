@@ -2,11 +2,18 @@ using System;
 using System.Runtime.CompilerServices;
 using Models;
 using System.Collections.Generic;
+using StoreBL;
 
 namespace UI
 {
     public class OrderMenu : IMenu
     {
+        private IBL _bl;
+
+        public OrderMenu(IBL bl)
+        {
+            _bl = bl;
+        }
         public void Start()
         {
             bool goBack = false;
