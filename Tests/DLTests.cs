@@ -78,12 +78,6 @@ namespace Tests
                     Name = "Tenzin",
                     Address = "234 City",
                     Email = "hr@net.com"
-                    // Orders = new List<Entity.Order>(){
-                    //     new Entity.Order(){
-                    //         Id = 1,
-                    //         Total = (decimal?)3.24
-                    //     }
-                    // }
                 });
 
                 context.SaveChanges();

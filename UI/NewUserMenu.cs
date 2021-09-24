@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using StoreBL;
 using Models;
+using Serilog;
 
 namespace UI
 {
@@ -31,7 +32,6 @@ namespace UI
                         CreateUser();
                         break;
                     case "2":
-                        GetAllCustomers();
                         exit = true;
                         break;
                     case "x":
@@ -77,29 +77,19 @@ namespace UI
             Customer addedCustomer = _bl.AddCustomer(cust);
             JustBorder();
             Console.WriteLine($"\nYou created {addedCustomer}");
+            Log.Information("Customer created");
+            JustBorder();
 
+            MenuFactory.GetMenu("current user").Start();
         }
-
-        private void GetAllCustomers()
-        {
-            List<Customer> customers = _bl.GetAllCustomers();
-            foreach (Customer cust in customers)
-            {
-                JustBorder();
-                Console.WriteLine(cust);
-                JustBorder();
-                Console.WriteLine();
-            }
-        }
-
         private void GetACustomer()
         {
-            
+
         }
 
         private void JustBorder()
         {
-            Console.WriteLine("==========================");
+            Console.WriteLine("==========================\n");
         }
     }
 }

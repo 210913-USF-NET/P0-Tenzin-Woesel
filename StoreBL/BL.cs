@@ -8,7 +8,6 @@ namespace StoreBL
     public class BL : IBL
 
     {
-        
         private ICustomerRepo _repo;
 
         public BL(ICustomerRepo repo)
@@ -33,6 +32,11 @@ namespace StoreBL
         public List<Customer> SearchCustomer(string quertStr)
         {
            return _repo.SearchCustomer(quertStr);
+        }
+
+        public List<Product> GetAllProducts()
+        {
+            return _repo.GetAllProducts();
         }
     }
 }

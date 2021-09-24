@@ -31,7 +31,7 @@ namespace Models
 
         public override string ToString()
         {
-            return $"Product Id: {this.Id}\n Product Name: {this.Name}\nProduct Price: {this.Price}\nProduct Description: {this.Description}\n";
+            return $"Product Id: {this.Id}\nProduct Name: {this.Name}\nProduct Price: {this.Price}\nProduct Description: {this.Description}\n";
         }
     }
 }

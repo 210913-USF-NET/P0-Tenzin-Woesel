@@ -101,5 +101,18 @@ namespace DL
                     }
                 ).ToList();
         }
+
+        public List<Model.Product> GetAllProducts()
+        {
+            return _context.Products.Select(product => new Model.Product()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = (decimal) product.Price,
+                Description = product.Description,
+                Category = product.Category
+
+            }).ToList();
+        }
     }
 }

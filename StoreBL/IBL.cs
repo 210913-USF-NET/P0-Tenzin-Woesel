@@ -12,5 +12,7 @@ namespace StoreBL
         Customer UpdateCustomer(Customer customerToUpdate);
 
         List<Customer> SearchCustomer(string quertStr);
+
+        List<Product> GetAllProducts();
     }
 }

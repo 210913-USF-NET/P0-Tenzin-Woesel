@@ -9,11 +9,6 @@ namespace UI
 {
     public class MainMenu : IMenu
     {
-        // private IBL _bl;
-        // public MainMenu(IBL bl)
-        // {
-        //     _bl = bl;
-        // }
         public void Start()
         {
             Console.WriteLine("This is the Main Menu");
@@ -21,27 +16,28 @@ namespace UI
             string userInput = "";
             do
             {
-                Console.WriteLine("[0] Returning customer");
-                Console.WriteLine("[1] New Customer");
-                Console.WriteLine("[2] Window Shop");
+                Console.WriteLine("[1] Returning customer.");
+                Console.WriteLine("[2] New Customer");
                 Console.WriteLine("[x] Exit");
                 userInput = Console.ReadLine();
                 switch (userInput)
                 {
-                    case "0":
+                    case "1":
                         MenuFactory.GetMenu("current user").Start();
                         break;
-                    case "1":
+                    case "2":
                         // new NewUserMenu(new BL(RAMCustomerRepo.GetInstance())).Start();
                         // new NewUserMenu(new BL(new CustomerFileRepo())).Start();
                         MenuFactory.GetMenu("new user").Start();
                         break;
-                    case "2":
-                        JustBrowse();
+                    case "3":
                         break;
                     case "x":
                         Console.WriteLine("Exit program.");
                         exit = true;
+                        break;
+                    case "admin":
+                        MenuFactory.GetMenu("admin").Start();
                         break;
                     default:
                         Console.WriteLine("Ivalid input.");
@@ -55,6 +51,7 @@ namespace UI
         /// </summary>
         private void CurrentCustomer()
         {
+            //get the username and check if the username is in the database
             Console.WriteLine("Please enter your username");
             string userName = Console.ReadLine();
 
@@ -73,11 +70,6 @@ namespace UI
 
             // }
         }
-        private void JustBrowse()
-        {
-            //if user choses this then get the List<Items> and display to user
-        }
-
-
+        
     }
 }

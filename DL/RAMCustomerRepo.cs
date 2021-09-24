@@ -87,5 +87,10 @@ namespace DL
         {
             throw new NotImplementedException();
         }
+
+        public List<Product> GetAllProducts()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

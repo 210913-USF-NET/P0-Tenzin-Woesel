@@ -18,5 +18,7 @@ namespace DL
         Customer AddAnOrder(Order order);
 
         List<Customer> SearchCustomer(string queryStr);
+
+        List<Product> GetAllProducts();
     }
 }

@@ -4,6 +4,7 @@ using StoreBL;
 using DL.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
+using System.Linq.Expressions;
 
 namespace UI
 {
@@ -26,6 +27,10 @@ namespace UI
                     return new NewUserMenu(new BL(new DBCustomerRepo(context)));
                 case "order menu":
                     return new OrderMenu(new BL(new DBCustomerRepo(context)));
+                case "admin":
+                    return new AdminMenu(new BL(new DBCustomerRepo(context)));
+                case "location menu":
+                    return new LocationMenu(new BL(new DBCustomerRepo(context)));
                 default:
                     return null;
             }

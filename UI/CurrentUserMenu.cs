@@ -56,7 +56,7 @@ namespace UI
             }
             
             Console.WriteLine("Welcome to your profile." + cName);
-            MenuFactory.GetMenu("current user").Start();
+            MenuFactory.GetMenu("order menu").Start();
         }
     }
 }

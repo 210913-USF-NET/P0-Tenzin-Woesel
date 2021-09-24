@@ -21,10 +21,7 @@ namespace DL
             Entity.StoreFront addedStore = new Entity.StoreFront()
             {
                 Name = storeToAdd.Name,
-                Address = storeToAdd.Address,
-                Inventories = (ICollection<Entity.Inventory>)storeToAdd.Inventory,
-                Orders = (ICollection<Entity.Order>)storeToAdd.Order
-
+                Address = storeToAdd.Address
             };
 
             addedStore = _context.Add(addedStore).Entity;
@@ -34,9 +31,7 @@ namespace DL
             return new Model.StoreFront
             {
                 Id = addedStore.Id,
-                Address = addedStore.Address,
-                Inventory = (Model.Inventory)addedStore.Inventories,
-                Order = (List<Model.Order>)addedStore.Orders
+                Address = addedStore.Address
             };
         }
 
@@ -61,15 +56,7 @@ namespace DL
             {
                 Id = storeToUpdate.Id,
                 Name = storeToUpdate.Name,
-                Address = storeToUpdate.Address,
-                // Inventories = storeToUpdate.Inventory.Select(i => new Model.Inventory()
-                // {
-                //     Id = i.Id,
-                //     Quantity = i.Quantity
-                // }).ToList(),
-                // Inventories = (ICollection<Entity.Inventory>)storeToUpdate.Inventory,
-                Orders = (ICollection<Entity.Order>)storeToUpdate.Order
-                
+                Address = storeToUpdate.Address
             };
 
             updatedStore = _context.StoreFronts.Update(updatedStore).Entity;
@@ -79,9 +66,7 @@ namespace DL
             {
                 Id = updatedStore.Id,
                 Name = updatedStore.Name,
-                Address = updatedStore.Address,
-                Inventory = (Model.Inventory)updatedStore.Inventories,
-                Order = (List<Model.Order>)updatedStore.Orders
+                Address = updatedStore.Address
             };
 
         }
