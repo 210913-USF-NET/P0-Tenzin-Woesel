@@ -67,5 +67,10 @@ namespace DL
         {
             throw new Exception();
         }
+
+        public List<Customer> SearchCustomer(string queryStr)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

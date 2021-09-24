@@ -16,5 +16,7 @@ namespace DL
         Customer UpdateCustomer(Customer customerToUpdate);
 
         Customer AddAnOrder(Order order);
+
+        List<Customer> SearchCustomer(string queryStr);
     }
 }

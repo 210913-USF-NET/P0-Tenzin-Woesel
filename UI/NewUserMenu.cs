@@ -92,6 +92,11 @@ namespace UI
             }
         }
 
+        private void GetACustomer()
+        {
+            
+        }
+
         private void JustBorder()
         {
             Console.WriteLine("==========================");

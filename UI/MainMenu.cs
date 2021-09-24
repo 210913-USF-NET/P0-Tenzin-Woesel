@@ -29,7 +29,7 @@ namespace UI
                 switch (userInput)
                 {
                     case "0":
-                        CurrentCustomer();
+                        MenuFactory.GetMenu("current user").Start();
                         break;
                     case "1":
                         // new NewUserMenu(new BL(RAMCustomerRepo.GetInstance())).Start();
@@ -57,6 +57,8 @@ namespace UI
         {
             Console.WriteLine("Please enter your username");
             string userName = Console.ReadLine();
+
+            // List<Customer> currentCustomer = 
 
             //Get the lists of customers from the DB and check if this Name is available
             // List<Customer> customer = _bl.GetAllCustomers();

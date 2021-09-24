@@ -29,5 +29,10 @@ namespace StoreBL
         {
             return _repo.UpdateCustomer(customerToUpdate);
         }
+
+        public List<Customer> SearchCustomer(string quertStr)
+        {
+           return _repo.SearchCustomer(quertStr);
+        }
     }
 }

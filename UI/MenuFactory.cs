@@ -20,6 +20,8 @@ namespace UI
             {
                 case "main":
                     return new MainMenu();
+                case "current user":
+                    return new CurrentUserMenu(new BL(new DBCustomerRepo(context)));
                 case "new user":
                     return new NewUserMenu(new BL(new DBCustomerRepo(context)));
                 default:
