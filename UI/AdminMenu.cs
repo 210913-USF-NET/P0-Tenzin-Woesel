@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using StoreBL;
 using Models;
+using System.Globalization;
 
 namespace UI
 {
@@ -35,6 +36,9 @@ namespace UI
                     case "3":
                         GetAllProducts();
                         break;
+                    case "4":
+                        SelectAProduct();
+                        break;
                     case "x":
                         exit = true;
                         break;
@@ -64,6 +68,37 @@ namespace UI
                 Console.WriteLine(product);
                 Console.WriteLine();
             }
+        }
+
+        private void SelectAProduct()
+        {
+            productToSelect:
+            Console.WriteLine("Select a product to get details.");
+            List<Product> allProducts = _bl.GetAllProducts();
+            if(allProducts == null || allProducts.Count == 0)
+            {
+                Console.WriteLine("No products :/");
+                return;
+            }
+            for (int i = 0; i < allProducts.Count; i++)
+            {
+                Console.WriteLine($"[{i}] {allProducts[i]}");
+            }
+            
+            string input = Console.ReadLine();
+            int parsedInput;
+            bool parseSuccess = Int32.TryParse(input, out parsedInput);
+
+            if(parseSuccess && parsedInput >= 0 && parsedInput < allProducts.Count)
+            {
+                Product selectedProduct = allProducts[parsedInput];
+                Console.WriteLine($"You chose {selectedProduct.Name}");
+            }else
+            {
+                Console.WriteLine("Invalid input");
+                goto productToSelect;
+            }
+            
         }
     }
 }
