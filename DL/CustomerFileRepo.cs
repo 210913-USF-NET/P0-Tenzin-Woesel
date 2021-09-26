@@ -8,7 +8,7 @@ using Serilog;
 
 namespace DL
 {
-    public class CustomerFileRepo : ICustomerRepo
+    public class CustomerFileRepo
     {
         private const string filePath = "../DL/Customers.json";
 
@@ -74,6 +74,11 @@ namespace DL
         }
 
         public List<Product> GetAllProducts()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Order> GetAllOrders()
         {
             throw new NotImplementedException();
         }

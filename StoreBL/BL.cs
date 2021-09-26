@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Models;
 using DL;
+using System.Text.RegularExpressions;
 
 namespace StoreBL
 {
@@ -31,12 +32,47 @@ namespace StoreBL
 
         public List<Customer> SearchCustomer(string quertStr)
         {
-           return _repo.SearchCustomer(quertStr);
+            return _repo.SearchCustomer(quertStr);
         }
 
         public List<Product> GetAllProducts()
         {
             return _repo.GetAllProducts();
+        }
+
+        public List<Order> GetAllOrders()
+        {
+            return _repo.GetAllOrders();
+        }
+
+        public List<StoreFront> GetAllStores()
+        {
+            return _repo.GetAllStores();
+        }
+
+        public List<LineItems> GetLineItems()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteCustomer(string email)
+        {
+            _repo.DeleteCustomer(email);
+        }
+
+        public Product UpdateProduct(Product productToUpdate)
+        {
+            return _repo.UpdateProduct(productToUpdate);
+        }
+
+        public StoreFront SelectStore(int id)
+        {
+            return _repo.SelectStore(id);
+        }
+
+        public StoreFront AddStore(StoreFront storeFront)
+        {
+            return _repo.AddStore(storeFront);
         }
     }
 }

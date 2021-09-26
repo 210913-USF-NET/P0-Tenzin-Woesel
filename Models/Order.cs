@@ -6,6 +6,14 @@ namespace Models
     public class Order
     {
         // public Order(){}
+        public int Id { get; set; }
+
+        public int CustomerId { get; set; }
+
+        public int StoreFrontId { get; set; }
+        public List<LineItems> LineItems { get; set; }
+
+        public decimal Total { get; set; }
         public Order(decimal total) : this()
         {
             this.Total = total;
@@ -22,10 +30,6 @@ namespace Models
                     • Location (that the order was placed)
                     • Total price
         */
-        public int Id { get; set; }
-        public List<LineItems> LineItems { get; set; }
-        
-        public decimal Total { get; set; }
 
         public override string ToString()
         {

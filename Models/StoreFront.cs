@@ -4,14 +4,21 @@ namespace Models
 {
     public class StoreFront
     {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Address { get; set; }
+
+        public List<Inventory> Inventory { get; set; }
+
+        public List<Order> Order { get; set; }
         public StoreFront(){}
 
-        public StoreFront(string name, string address, Inventory inventory)
+        public StoreFront(string name, string address)
         {
             this.Name = name;
             this.Address = address;
-            this.Inventory = inventory;
-
         }
         /*
             The store front contains information pertaining the various store locations.
@@ -22,19 +29,10 @@ namespace Models
                     • List of Orders
 
         */
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string Address { get; set; }
-
-        public Inventory Inventory { get; set; }
-
-        public List<Order> Order { get; set; }
 
         public override string ToString()
         {
-            return $"Store Name: {this.Name} \nAddress: {this.Address} \n Inventory: {this.Inventory} \n Order: {this.Order}";
+            return $"Store Name: {this.Name} \nAddress: {this.Address} \n";
         }
     }
 }

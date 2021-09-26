@@ -21,23 +21,31 @@ namespace UI
             string input = "";
             do
             {
+                Console.WriteLine("[0] Create Store");
                 Console.WriteLine("[1] View all users.");
                 Console.WriteLine("[2] View All Store.");
-                Console.WriteLine("[3] View Inventory");
+                Console.WriteLine("[3] View a Store.");
                 Console.WriteLine("[x] Back to Main menu." );
                 input = Console.ReadLine();
                 switch(input)
                 {
+                    case "0":
+                        CreateStore();
+                        break;
                     case "1":
                         GetAllCustomers();
                         break;
                     case "2":
+                        GetAllStores();
                         break;
                     case "3":
                         GetAllProducts();
                         break;
                     case "4":
                         SelectAProduct();
+                        break;
+                    case "5":
+                        
                         break;
                     case "x":
                         exit = true;
@@ -99,6 +107,40 @@ namespace UI
                 goto productToSelect;
             }
             
+        }
+
+        private void CreateStore()
+        {
+            Console.WriteLine("Creating new Store");
+            StoreFront newStore = new StoreFront();
+            inputName:
+                Console.WriteLine("Name: ");
+                string name = Console.ReadLine();
+
+                try
+                {
+                     newStore.Name = name;
+                }
+                catch (InputInvalidException e)
+                {
+                    Console.WriteLine(e.Message);
+                    goto inputName;                    
+                }
+                Console.WriteLine("Address: ");
+                newStore.Address = Console.ReadLine();
+
+                StoreFront addedStore = _bl.AddStore(newStore);
+                Console.WriteLine($"You created {addedStore}");
+        }
+
+        private void GetAllStores()
+        {
+            List<StoreFront> stores = _bl.GetAllStores();
+            foreach (StoreFront store in stores)
+            {
+                Console.WriteLine(store);
+                Console.WriteLine();
+            }
         }
     }
 }

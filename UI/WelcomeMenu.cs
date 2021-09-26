@@ -3,16 +3,20 @@ using System.Runtime.CompilerServices;
 using Models;
 using System.Collections.Generic;
 using StoreBL;
+using Microsoft.IdentityModel.Tokens;
 
 namespace UI
 {
-    public class OrderMenu : IMenu
+    public class WelcomeMenu : IMenu
     {
         private IBL _bl;
 
-        public OrderMenu(IBL bl)
+        private StoreService _storeService;
+
+        public WelcomeMenu(IBL bl, StoreService storeService)
         {
             _bl = bl;
+            _storeService = storeService;
         }
         public void Start()
         {
@@ -20,24 +24,15 @@ namespace UI
             string userInput = "";
             do
             {
-
-                Console.WriteLine("Welcome to this Location");
-                Console.WriteLine("These are the items available at this store");
-                foreach (var item in ListOfItems())
-                {
-                    Console.WriteLine(item);
-                }
-                Console.WriteLine("[1] Add Item to cart");
-                Console.WriteLine("[2] Remove Item from cart.");
-                Console.WriteLine("[3] View Cart.");
-                Console.WriteLine("[4] Check out.");
-                Console.WriteLine("[5] Go Back to Store Menu");
-                Console.WriteLine("[x] Go Back to Main Menu");
+                Console.WriteLine("What would you like to do?");
+                Console.WriteLine("[1] Browse items.");
+                Console.WriteLine("[2] View Cart.");
+                Console.WriteLine("[x] Go Back");
                 userInput = Console.ReadLine();
                 switch (userInput)
                 {
                     case "1":
-                        AddItem();
+                        selectALocation();
                         break;
                     case "2":
                         RemoveItem();
@@ -48,8 +43,7 @@ namespace UI
                     case "4":
                         CheckOut();
                         break;
-                    case "5":
-                        Console.WriteLine("Go back to previous menu.");
+                    case "x":
                         goBack = true;
                         break;
                     default:
@@ -61,15 +55,26 @@ namespace UI
 
         }
 
-        private void AddItem()
+        private void selectALocation()
         {
-            
+            // selectALocation:
+                // Console.WriteLine("Please select a location to shop at");
+                List<StoreFront> allStores = _bl.GetAllStores();
+                if(allStores == null || allStores.Count == 0)
+                {
+                    Console.WriteLine("Stores under constructions.");
+                    return;
+                }
+
+                StoreFront selectedStore = _storeService.SelectAStore("Pick a store to shop at", allStores);
+
+                Console.WriteLine("You Selected " + selectedStore);
 
         }
 
         private void RemoveItem()
         {
-            
+
         }
 
         private void ViewCart()

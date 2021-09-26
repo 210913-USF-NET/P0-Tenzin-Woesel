@@ -25,6 +25,7 @@ namespace UI
                 switch(userInput)
                 {
                     case "1":
+                        ViewProducts();
                         break;
                     case "3":
                         Console.WriteLine("Go back to previous menu");
@@ -39,5 +40,9 @@ namespace UI
             } while (!exit);
         }
 
+        private void ViewProducts()
+        {
+            
+        }
     }
 }

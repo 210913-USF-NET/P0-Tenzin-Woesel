@@ -1,7 +1,21 @@
+using System.Collections.Generic;
+
 namespace Models
 {
     public class Product
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public decimal Price { get; set; }
+        
+        public string Description { get; set; }
+        
+        public string Category { get; set; }
+
+        public List<Inventory> Inventories {get; set;}
+
+        public List<LineItems> LineItems{get; set;}
         public Product() { }
         
         public Product(string name, decimal price, string description, string category)
@@ -20,14 +34,6 @@ namespace Models
                     • Desc. (optional)
                     • Category (optional)
         */
-        public int Id { get; set; }
-        public string Name { get; set; }
-
-        public decimal Price { get; set; }
-        
-        public string Description { get; set; }
-        
-        public string Category { get; set; }
 
         public override string ToString()
         {

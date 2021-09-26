@@ -46,7 +46,14 @@ namespace DL
 
         public void DeleteCustomer(string email)
         {
-            throw new System.NotImplementedException();
+            Entity.Customer customerToDelete = new Entity.Customer()
+            {
+                Email = email
+            };
+
+            customerToDelete = _context.Remove(customerToDelete).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
         }
 
         public List<Model.Customer> GetAllCustomers()
@@ -108,11 +115,103 @@ namespace DL
             {
                 Id = product.Id,
                 Name = product.Name,
-                Price = (decimal) product.Price,
+                Price = (decimal)product.Price,
                 Description = product.Description,
                 Category = product.Category
 
             }).ToList();
+        }
+        public List<Model.StoreFront> GetAllStores()
+        {
+            return _context.StoreFronts.Select(stores => new Model.StoreFront()
+            {
+                Id = stores.Id,
+                Name = stores.Name,
+                Address = stores.Address
+            }).ToList();
+        }
+
+        public List<Model.Order> GetAllOrders()
+        {
+            return _context.Orders.Select(order => new Model.Order()
+            {
+                Id = order.Id,
+                Total = (decimal)order.Total
+            }).ToList();
+        }
+
+        public List<Model.LineItems> GetLineItems()
+        {
+            return _context.LineItems.Select(items => new Model.LineItems()
+            {
+                Id = items.Id,
+                Quantity = (decimal)items.Quantity
+            }).ToList();
+        }
+
+        public Model.Product UpdateProduct(Model.Product productToUpdate)
+        {
+            Entity.Product updateProduct = new Entity.Product()
+            {
+                Id = productToUpdate.Id,
+                Name = productToUpdate.Name,
+                Price = productToUpdate.Price,
+                Description = productToUpdate.Description,
+                Category = productToUpdate.Category
+            };
+
+            updateProduct = _context.Products.Update(updateProduct).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+
+            return new Model.Product()
+            {
+                Id = updateProduct.Id,
+                Name = updateProduct.Name,
+                Price = (decimal)updateProduct.Price,
+                Description = updateProduct.Description,
+                Category = updateProduct.Category
+            };
+        }
+
+        public Model.StoreFront SelectStore(int id)
+        {
+            Entity.StoreFront storeById = _context.StoreFronts.Include("LineItems").FirstOrDefault(s => s.Id == id);
+            
+            return new Model.StoreFront()
+            {
+                Id = storeById.Id,
+                Name = storeById.Name,
+                Address = storeById.Address,
+                Inventory = storeById.Inventories.Select(i => new Model.Inventory(){
+                    Id = i.Id,
+                    Quantity = (int)i.Quantity,
+                    ProductID =(int) i.ProductId,
+                    StoreID = (int)i.StoreId
+                }).ToList()
+            };
+        }
+
+        public Model.StoreFront AddStore(Model.StoreFront storeFront)
+        {
+            Entity.StoreFront storeToAdd = new Entity.StoreFront()
+            {
+                Name = storeFront.Name,
+                Address = storeFront.Address
+            };
+
+            storeToAdd = _context.Add(storeToAdd).Entity;
+
+            _context.SaveChanges();
+
+            _context.ChangeTracker.Clear();
+
+            return new Model.StoreFront()
+            {
+                Id = storeToAdd.Id,
+                Name = storeToAdd.Name,
+                Address = storeToAdd.Address
+            };
         }
     }
 }

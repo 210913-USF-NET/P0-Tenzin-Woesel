@@ -31,12 +31,12 @@ namespace Models
                     • Email/Phone number
                     • List of Orders
         */
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public string Address { get; set; }
 
         // public string PinNum { get; }
-
         private string _email;
         public string Email
         {
@@ -62,7 +62,6 @@ namespace Models
         }
 
         public List<Order> Order { get; set; }
-        public int Id { get; set; }
 
         public override string ToString()
         {

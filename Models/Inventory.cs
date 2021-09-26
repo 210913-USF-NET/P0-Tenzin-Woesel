@@ -2,6 +2,11 @@ namespace Models
 {
     public class Inventory
     {
+        public int Id { get; set; }
+        public int Quantity { get; set; }
+
+        public int ProductID { get; set; }
+        public int StoreID { get; set; }
         public Inventory() { }
 
         public Inventory(int Id, int Quantity)
@@ -9,8 +14,6 @@ namespace Models
             this.Id = Id;
             this.Quantity = Quantity;
         }
-        public int Id { get; set; }
-        public int Quantity { get; set; }
 
         public override string ToString()
         {

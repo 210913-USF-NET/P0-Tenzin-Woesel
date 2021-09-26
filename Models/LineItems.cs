@@ -8,9 +8,9 @@ namespace Models
                     • Product
                     • Quantity
         */
-
+        public int Id { get; set; }
+        public decimal Quantity { get; set; }
         public Product Product { get; set; }
-        
-        public int Quantity { get; set; }
+
     }
 }

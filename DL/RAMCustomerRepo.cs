@@ -5,7 +5,7 @@ using Models;
 
 namespace DL
 {
-    public sealed class RAMCustomerRepo : ICustomerRepo
+    public sealed class RAMCustomerRepo 
     {
         private static RAMCustomerRepo _instance;
         private static List<Customer> _customers;
@@ -89,6 +89,11 @@ namespace DL
         }
 
         public List<Product> GetAllProducts()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Order> GetAllOrders()
         {
             throw new NotImplementedException();
         }

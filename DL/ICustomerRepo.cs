@@ -20,5 +20,19 @@ namespace DL
         List<Customer> SearchCustomer(string queryStr);
 
         List<Product> GetAllProducts();
+
+        List<Order> GetAllOrders();
+
+        List<LineItems> GetLineItems();
+
+        List<StoreFront> GetAllStores();
+
+        StoreFront AddStore(StoreFront storeFront);
+
+        Product UpdateProduct(Product productToUpdate);
+
+        StoreFront SelectStore(int id);
+
+        
     }
 }
