@@ -77,8 +77,18 @@ namespace StoreBL
 
         public decimal CalculateTotal(Order orderToCalculate)
         {
+            decimal total = 0;
+            List<LineItems> lineItems = orderToCalculate.LineItems;
 
-            return 0;
+
+            foreach (LineItems item in lineItems)
+            {
+                int productId = item.ProductId;
+                Product product = _repo.GetProductById(productId);
+                total += product.Price;
+            }
+
+            return total;
         }
 
         public Order AddOrder(Order order)
@@ -105,5 +115,30 @@ namespace StoreBL
         {
             return _repo.GetInventoriesByStoreId(storeId);
         }
+
+        public LineItems AddLineItem(LineItems itemToAdd)
+        {
+            return _repo.AddLineItem(itemToAdd);
+        }
+
+        public Inventory UpdateInventory(Inventory inventoryToUpdate)
+        {
+            return _repo.UpdateInventory(inventoryToUpdate);
+        }
+
+        public Order UpdateOrder(Order orderToUpdate)
+        {
+            return _repo.UpdateOrder(orderToUpdate);
+        }
+
+        // public List<LineItems> AddLineItems(List<LineItems> lineItems)
+        // {
+        //     return _repo.AddLineItems(lineItems);
+        // }
+
+        // public List<LineItems> GetLineItemsByOrderId(int orderId)
+        // {
+        //     return _repo.GetLineItemsById(orderId);
+        // }
     }
 }

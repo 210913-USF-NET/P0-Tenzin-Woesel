@@ -6,11 +6,14 @@ using StoreBL;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using Microsoft.Data.SqlClient.Server;
+using System.Net.NetworkInformation;
+using Serilog;
 
 namespace UI
 {
     public class StoreMenu : IMenu
     {
+        private List<LineItems> items = new List<LineItems>();
         private IBL _bl;
 
         private StoreService _storeService;
@@ -30,7 +33,7 @@ namespace UI
                 //Show the lists of items and then show the options of adding to cart
                 Console.WriteLine("[1] View Items");
                 Console.WriteLine("[2] Select Another Location");
-                Console.WriteLine("[3] Get inventories.");
+                Console.WriteLine("[3] Add item.");
                 Console.WriteLine("[x] Back to Main Menu.");
                 userInput = Console.ReadLine();
 
@@ -43,9 +46,11 @@ namespace UI
                         SelectAnotherLocation();
                         MenuFactory.GetMenu("store").Start();
                         break;
-                    case "5":
-                        SelectAnItem();
-
+                    case "3":
+                        AddItemToOrder();
+                        break;
+                    case "4":
+                        StartAnOrder();
                         break;
                     case "x":
                         Console.WriteLine("Go back");
@@ -68,7 +73,10 @@ namespace UI
 
 
             List<Product> allProducts = _bl.GetAllProducts();
-            selectAnItem:
+
+
+            //create a collection of inv prods pair. Each element in collection is
+            //anonymous type containing both the products name and inventory id
             var tempInventory = from inv in inventories
                                 join prods in allProducts on inv.ProductID equals prods.Id
                                 select new { inv.ProductID, prods.Name, inv.Quantity, prods.Price, prods.Description };
@@ -83,7 +91,7 @@ namespace UI
 
         }
 
-        private void AddItemsToOrder()
+        private void StartAnOrder()
         {
             int storeId = StaticService.currentStore.Id;
             int customerId = StaticService.currentCustomer.Id;
@@ -94,8 +102,7 @@ namespace UI
 
             newOrder = _bl.AddOrder(newOrder);
 
-            LineItems items = new LineItems();
-            items.OrderId = newOrder.CustomerId;
+            StaticService.currentOrder = newOrder;
         }
 
         private void SelectAnotherLocation()
@@ -114,47 +121,59 @@ namespace UI
             StaticService.currentStore = selectedStore;
         }
 
-        private void  SelectAnItem()
-        {   
+        private void AddItemToOrder()
+        {
+            StartAnOrder();
+            Order currentOrder = StaticService.currentOrder;
 
             int storeId = StaticService.currentStore.Id;
             List<Inventory> inventories = _bl.GetInventoriesByStoreId(storeId);
-
+        selectAnItem:
             Inventory selectedItem = _storeService.SelectAnItem("Pick an item to add to order : ", inventories);
 
             Console.WriteLine("You selected " + selectedItem);
 
-            int customerId = StaticService.currentCustomer.Id;
+            LineItems item = new LineItems();
 
-            Console.WriteLine(customerId);
+            item.ProductId = selectedItem.ProductID;
 
-            Order newOrder = new Order();
-            newOrder.CustomerId = customerId;
-            newOrder.StoreFrontId = storeId;
+            item.OrderId = currentOrder.Id;
 
-            newOrder = _bl.AddOrder(newOrder);
-
-            LineItems items = new LineItems();
-
-            items.ProductId = selectedItem.ProductID;
-
-            items.OrderId = newOrder.Id;
 
             Console.WriteLine("How many do you want to add?");
-            items.Quantity = Int32.Parse(Console.ReadLine());
+            Int32 quantityNeeded = Int32.Parse(Console.ReadLine());
+            item.Quantity = quantityNeeded;
+            item = _bl.AddLineItem(item);
+            // Console.WriteLine(item.Quantity);
+            items.Add(item);
 
-            Console.WriteLine(items.Quantity);
+            currentOrder.LineItems = items;
 
+            selectedItem.Quantity -= quantityNeeded;
 
-            Console.WriteLine("Do you want to add more items? ");
-            // if yes
-            //  then send it back to the 
-            //  #region if no then place the order
-                  
-            //  #endregion
-            //Update here afterwards
-            // _bl.AddOrder(newOrder);
+            Console.WriteLine("Do you want to add more items? Y/N");
+            string moreItems = Console.ReadLine();
+            if (moreItems.ToLower() == "y")
+            {
+                decimal total = _bl.CalculateTotal(currentOrder);
 
+                currentOrder.Total = total;
+                Console.WriteLine("Total is : " + total);
+                goto selectAnItem;
+            }
+            else
+            {
+                decimal total = _bl.CalculateTotal(currentOrder);
+
+                currentOrder.Total = total;
+                Console.WriteLine("Total is : " + total);
+                //update the order, product and item to repo.
+                _bl.UpdateInventory(selectedItem);
+                _bl.UpdateOrder(currentOrder);
+                Log.Information("Order placed successfully");
+                int id = currentOrder.Id;
+                List<LineItems> toDisplayToUser = _bl.GetLineItems();
+            }
 
         }
     }

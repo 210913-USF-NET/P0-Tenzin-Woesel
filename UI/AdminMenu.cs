@@ -50,7 +50,7 @@ namespace UI
                         AddNewProducts();
                         break;
                     case "5":
-
+                        RestockInventory();
                         break;
                     case "x":
                         exit = true;
@@ -144,9 +144,25 @@ namespace UI
             Console.WriteLine("Product added successfully");
         }
 
-        private void AddInventory()
+        // private void AddInventory()
+        // {
+        //     List<Product> listOfProducts = _bl.GetAllProducts();
+        //     Product product = _storeService.SelectAProduct("Select the product to add inventory ", listOfProducts);
+
+
+        // }
+
+        private void RestockInventory()
         {
-        
+            List<StoreFront> allStores = _bl.GetAllStores();
+            StoreFront store = _storeService.SelectAStore("Select a store to update inventory", allStores);
+
+            List<Inventory> allInventories = _bl.GetInventoriesByStoreId(store.Id);
+
+            Inventory selectedItem = _storeService.SelectAnItem("Select the inventory to restock", allInventories);
+            Console.WriteLine(selectedItem.Product.Name);
+            Console.WriteLine("");
+            
         }
     }
 }

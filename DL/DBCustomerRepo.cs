@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Data.Common;
 using System.Threading.Tasks;
-using DL.Entities;
 using Models;
 
 namespace DL
@@ -286,7 +285,7 @@ namespace DL
             };
         }
 
-        public LineItems AddLineItem(LineItems lineItems)
+        public Model.LineItems AddLineItem(Model.LineItems lineItems)
         {
             Entity.LineItem itemToAdd = new Entity.LineItem()
             {
@@ -340,5 +339,72 @@ namespace DL
                 ProductID = (int)newInv.ProductId
             }).ToList();
         }
+
+        public Model.Product GetProductById(int productId)
+        {
+            Entity.Product productById = _context.Products.FirstOrDefault(p => p.Id == productId);
+
+            return new Model.Product()
+            {
+                Id = productById.Id,
+                Name = productById.Name,
+                Price = productById.Price,
+                Description = productById.Description,
+                Category = productById.Category
+            };
+        }
+
+        public Model.Inventory UpdateInventory(Model.Inventory inventoryToUpdate)
+        {
+            Entity.Inventory updateInventory = new Entity.Inventory()
+            {
+                Id = inventoryToUpdate.Id,
+                StoreId = inventoryToUpdate.StoreID,
+                ProductId = inventoryToUpdate.ProductID,
+                Quantity = inventoryToUpdate.Quantity,
+            };
+
+            updateInventory = _context.Inventories.Update(updateInventory).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+
+            return new Model.Inventory()
+            {
+                Id = updateInventory.Id,
+                StoreID = (int)updateInventory.StoreId,
+                ProductID = (int)updateInventory.ProductId
+            };
+        }
+
+        public Model.Order UpdateOrder(Model.Order orderToUpdate)
+        {
+            Entity.Order updateOrder = new Entity.Order()
+            {
+                Id = orderToUpdate.Id,
+                Total = orderToUpdate.Total,
+                CustomerId = orderToUpdate.CustomerId,
+                StoreFrontId = orderToUpdate.StoreFrontId
+            };
+
+            updateOrder = _context.Orders.Update(updateOrder).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+
+            return new Model.Order()
+            {
+                Id = updateOrder.Id,
+                Total = (decimal)updateOrder.Total,
+                CustomerId = updateOrder.CustomerId,
+                StoreFrontId = updateOrder.StoreFrontId
+            };
+        }
+
+        // public List<Model.LineItems> AddLineItems(List<LineItems> lineItems)
+        // {
+        //     return _context.LineItems.Select(newInv => new Model.LineItems())
+        //     {
+        //         Id = newInv.
+        //     }
+        // }
     }
 }
