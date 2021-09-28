@@ -47,16 +47,20 @@ namespace UI
         {
             Console.WriteLine("Enter your name");
             string cName = Console.ReadLine();
-            List<Customer> allCustomers = _bl.SearchCustomer(cName);
 
-            if(allCustomers == null || allCustomers.Count == 0)
+            Customer realCustomer = _bl.GetCustomer(cName);
+
+            if (realCustomer == null && realCustomer.Equals(""))
             {
                 Console.WriteLine("No such users :/");
                 return;
             }
-            
-            Console.WriteLine("Welcome to your profile. " + cName);
-            MenuFactory.GetMenu("order menu").Start();
+
+            Console.WriteLine("Welcome to your profile. " + realCustomer.Name);
+
+            StaticService.currentCustomer = realCustomer;
+
+            MenuFactory.GetMenu("welcome menu").Start();
         }
     }
 }

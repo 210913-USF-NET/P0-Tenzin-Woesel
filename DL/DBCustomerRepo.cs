@@ -7,6 +7,7 @@ using System.Linq;
 using System.Data.Common;
 using System.Threading.Tasks;
 using DL.Entities;
+using Models;
 
 namespace DL
 {
@@ -18,9 +19,26 @@ namespace DL
         {
             _context = context;
         }
-        public Model.Customer AddAnOrder(Model.Order order)
+        public Model.Order AddAnOrder(Model.Order order)
         {
-            throw new System.NotImplementedException();
+            Entity.Order orderToAdd = new Entity.Order()
+            {
+                Total = order.Total,
+                CustomerId = order.CustomerId,
+                StoreFrontId = order.StoreFrontId
+            };
+
+            orderToAdd = _context.Orders.Add(orderToAdd).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+
+            return new Model.Order()
+            {
+                Id = orderToAdd.Id,
+                Total = (decimal)orderToAdd.Total,
+                CustomerId = orderToAdd.CustomerId,
+                StoreFrontId = orderToAdd.StoreFrontId
+            };
         }
 
         public Model.Customer AddCustomer(Model.Customer customer)
@@ -41,6 +59,30 @@ namespace DL
                 Name = customerToAdd.Name,
                 Address = customerToAdd.Address,
                 Email = customerToAdd.Email
+            };
+        }
+        public Model.Product AddProduct(Model.Product product)
+
+        {
+            Entity.Product productToAdd = new Entity.Product()
+            {
+                Name = product.Name,
+                Price = product.Price,
+                Description = product.Description,
+                Category = product.Category
+            };
+
+            productToAdd = _context.Add(productToAdd).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+
+            return new Model.Product
+            {
+                Id = productToAdd.Id,
+                Name = productToAdd.Name,
+                Price = (decimal)productToAdd.Price,
+                Description = productToAdd.Description,
+                Category = productToAdd.Category
             };
         }
 
@@ -67,9 +109,17 @@ namespace DL
             }).ToList();
         }
 
-        public Model.Customer GetCustomer(string email)
+        public Model.Customer GetCustomer(string name)
         {
-            throw new System.NotImplementedException();
+            Entity.Customer customerByName = _context.Customers.FirstOrDefault(s => s.Name == name);
+
+            return new Model.Customer()
+            {
+                Id = customerByName.Id,
+                Name = customerByName.Name,
+                Address = customerByName.Address,
+                Email = customerByName.Email
+            };
         }
 
         public Model.Customer UpdateCustomer(Model.Customer customerToUpdate)
@@ -145,9 +195,30 @@ namespace DL
             return _context.LineItems.Select(items => new Model.LineItems()
             {
                 Id = items.Id,
-                Quantity = (decimal)items.Quantity
+                Quantity = (int)items.Quantity
             }).ToList();
         }
+
+
+        public List<Model.Inventory> GettAllInventories()
+        {
+            return _context.Inventories.Include("Product").Select(inventory => new Model.Inventory()
+            {
+                Id = inventory.Id,
+                Quantity = (int)inventory.Quantity,
+                ProductID = (int)inventory.ProductId,
+                StoreID = (int)inventory.StoreId,
+                Product = new Model.Product
+                {
+                    Id = inventory.Product.Id,
+                    Name = inventory.Product.Name,
+                    Description = inventory.Product.Description,
+                    Price = inventory.Product.Price,
+                    Category = inventory.Product.Category
+                }
+            }).ToList();
+        }
+
 
         public Model.Product UpdateProduct(Model.Product productToUpdate)
         {
@@ -177,18 +248,19 @@ namespace DL
         public Model.StoreFront SelectStore(int id)
         {
             Entity.StoreFront storeById = _context.StoreFronts.Include("LineItems").FirstOrDefault(s => s.Id == id);
-            
+
             return new Model.StoreFront()
             {
                 Id = storeById.Id,
                 Name = storeById.Name,
                 Address = storeById.Address,
-                Inventory = storeById.Inventories.Select(i => new Model.Inventory(){
-                    Id = i.Id,
-                    Quantity = (int)i.Quantity,
-                    ProductID =(int) i.ProductId,
-                    StoreID = (int)i.StoreId
-                }).ToList()
+                // Inventory = storeById.Inventories.Select(i => new Model.Inventory()
+                // {
+                //     Id = i.Id,
+                //     Quantity = (int)i.Quantity,
+                //     ProductID = (int)i.ProductId,
+                //     StoreID = (int)i.StoreId
+                // }).ToList()
             };
         }
 
@@ -212,6 +284,61 @@ namespace DL
                 Name = storeToAdd.Name,
                 Address = storeToAdd.Address
             };
+        }
+
+        public LineItems AddLineItem(LineItems lineItems)
+        {
+            Entity.LineItem itemToAdd = new Entity.LineItem()
+            {
+                Quantity = (int?)lineItems.Quantity,
+                ProductId = lineItems.ProductId,
+                OrderId = lineItems.OrderId
+            };
+
+            itemToAdd = _context.Add(itemToAdd).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+
+            return new Model.LineItems()
+            {
+                Id = itemToAdd.Id,
+                Quantity = (int)itemToAdd.Quantity,
+                ProductId = (int)itemToAdd.ProductId,
+                OrderId = (int)itemToAdd.OrderId
+            };
+        }
+
+        public Model.Inventory AddInventory(Model.Inventory inventory)
+        {
+            Entity.Inventory inventoryToAdd = new Entity.Inventory()
+            {
+                Quantity = inventory.Quantity,
+                ProductId = inventory.ProductID,
+                StoreId = inventory.StoreID
+            };
+
+            inventoryToAdd = _context.Add(inventoryToAdd).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+
+            return new Model.Inventory()
+            {
+                Id = inventoryToAdd.Id,
+                Quantity = (int)inventoryToAdd.Quantity,
+                ProductID = (int)inventoryToAdd.ProductId,
+                StoreID = (int)inventoryToAdd.StoreId
+            };
+        }
+
+        public List<Model.Inventory> GetInventoriesByStoreId(int storeId)
+        {
+            return _context.Inventories.Where(inv => inv.StoreId == storeId).Select(newInv => new Model.Inventory()
+            {
+                Id = newInv.Id,
+                StoreID = (int)newInv.StoreId,
+                Quantity = (int)newInv.Quantity,
+                ProductID = (int)newInv.ProductId
+            }).ToList();
         }
     }
 }

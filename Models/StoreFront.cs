@@ -9,10 +9,6 @@ namespace Models
         public string Name { get; set; }
 
         public string Address { get; set; }
-
-        public List<Inventory> Inventory { get; set; }
-
-        public List<Order> Order { get; set; }
         public StoreFront(){}
 
         public StoreFront(string name, string address)

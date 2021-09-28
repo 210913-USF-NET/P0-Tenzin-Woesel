@@ -9,6 +9,7 @@ namespace Models
     {
         public Customer()
         {
+            // this.Order = new List<Order>();
         }
 
         // public Customer(string pinNum)
@@ -61,11 +62,16 @@ namespace Models
             }
         }
 
-        public List<Order> Order { get; set; }
+        // public List<Order> Order { get; set; }
 
         public override string ToString()
         {
             return $"Customer ID: {this.Id}\nCustomer Name: {this.Name} \nAddress: {this.Address} \nEmail:{this.Email} \n";
+        }
+
+        public bool Equals(Customer customer)
+        {
+            return this.Name == customer.Name && this.Address == customer.Address && this.Email == customer.Email;
         }
     }
 }

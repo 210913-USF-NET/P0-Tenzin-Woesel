@@ -10,9 +10,12 @@ namespace UI
     {
         private IBL _bl;
 
-        public AdminMenu(IBL bl)
+        private StoreService _storeService;
+
+        public AdminMenu(IBL bl, StoreService storeService)
         {
             _bl = bl;
+            _storeService = storeService;
         }
         public void Start()
         {
@@ -25,9 +28,10 @@ namespace UI
                 Console.WriteLine("[1] View all users.");
                 Console.WriteLine("[2] View All Store.");
                 Console.WriteLine("[3] View a Store.");
-                Console.WriteLine("[x] Back to Main menu." );
+                Console.WriteLine("[4] Add New Products");
+                Console.WriteLine("[x] Back to Main menu.");
                 input = Console.ReadLine();
-                switch(input)
+                switch (input)
                 {
                     case "0":
                         CreateStore();
@@ -36,16 +40,17 @@ namespace UI
                         GetAllCustomers();
                         break;
                     case "2":
-                        GetAllStores();
-                        break;
-                    case "3":
                         GetAllProducts();
                         break;
+                    case "3":
+                        GetAllStores();
+                        break;
                     case "4":
-                        SelectAProduct();
+                        // SelectAProduct();
+                        AddNewProducts();
                         break;
                     case "5":
-                        
+
                         break;
                     case "x":
                         exit = true;
@@ -80,57 +85,35 @@ namespace UI
 
         private void SelectAProduct()
         {
-            productToSelect:
             Console.WriteLine("Select a product to get details.");
             List<Product> allProducts = _bl.GetAllProducts();
-            if(allProducts == null || allProducts.Count == 0)
-            {
-                Console.WriteLine("No products :/");
-                return;
-            }
-            for (int i = 0; i < allProducts.Count; i++)
-            {
-                Console.WriteLine($"[{i}] {allProducts[i]}");
-            }
-            
-            string input = Console.ReadLine();
-            int parsedInput;
-            bool parseSuccess = Int32.TryParse(input, out parsedInput);
+            Product selectedProduct = _storeService.SelectAProduct("Pick a product", allProducts);
 
-            if(parseSuccess && parsedInput >= 0 && parsedInput < allProducts.Count)
-            {
-                Product selectedProduct = allProducts[parsedInput];
-                Console.WriteLine($"You chose {selectedProduct.Name}");
-            }else
-            {
-                Console.WriteLine("Invalid input");
-                goto productToSelect;
-            }
-            
+            Console.WriteLine("You Selected " + selectedProduct);
         }
 
         private void CreateStore()
         {
             Console.WriteLine("Creating new Store");
             StoreFront newStore = new StoreFront();
-            inputName:
-                Console.WriteLine("Name: ");
-                string name = Console.ReadLine();
+        inputName:
+            Console.WriteLine("Name: ");
+            string name = Console.ReadLine();
 
-                try
-                {
-                     newStore.Name = name;
-                }
-                catch (InputInvalidException e)
-                {
-                    Console.WriteLine(e.Message);
-                    goto inputName;                    
-                }
-                Console.WriteLine("Address: ");
-                newStore.Address = Console.ReadLine();
+            try
+            {
+                newStore.Name = name;
+            }
+            catch (InputInvalidException e)
+            {
+                Console.WriteLine(e.Message);
+                goto inputName;
+            }
+            Console.WriteLine("Address: ");
+            newStore.Address = Console.ReadLine();
 
-                StoreFront addedStore = _bl.AddStore(newStore);
-                Console.WriteLine($"You created {addedStore}");
+            StoreFront addedStore = _bl.AddStore(newStore);
+            Console.WriteLine($"You created {addedStore}");
         }
 
         private void GetAllStores()
@@ -141,6 +124,29 @@ namespace UI
                 Console.WriteLine(store);
                 Console.WriteLine();
             }
+        }
+
+        private void AddNewProducts()
+        {
+            Console.WriteLine("Creating new product...");
+            Product newProduct = new Product();
+            Console.WriteLine("Add product name: ");
+            newProduct.Name = Console.ReadLine();
+
+            Console.WriteLine("Add product Description:");
+            newProduct.Description = Console.ReadLine();
+            Console.WriteLine("Add product Price:");
+            newProduct.Price = decimal.Parse(Console.ReadLine());
+            Console.WriteLine("Add product Category:");
+            newProduct.Category = Console.ReadLine();
+
+            _bl.AddProduct(newProduct);
+            Console.WriteLine("Product added successfully");
+        }
+
+        private void AddInventory()
+        {
+        
         }
     }
 }

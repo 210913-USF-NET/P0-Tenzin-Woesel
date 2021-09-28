@@ -52,7 +52,7 @@ namespace StoreBL
 
         public List<LineItems> GetLineItems()
         {
-            throw new NotImplementedException();
+            return _repo.GetLineItems();
         }
 
         public void DeleteCustomer(string email)
@@ -73,6 +73,37 @@ namespace StoreBL
         public StoreFront AddStore(StoreFront storeFront)
         {
             return _repo.AddStore(storeFront);
+        }
+
+        public decimal CalculateTotal(Order orderToCalculate)
+        {
+
+            return 0;
+        }
+
+        public Order AddOrder(Order order)
+        {
+            return _repo.AddAnOrder(order);
+        }
+
+        public Product AddProduct(Product product)
+        {
+            return _repo.AddProduct(product);
+        }
+
+        public List<Inventory> GetAllInventories()
+        {
+            return _repo.GettAllInventories();
+        }
+
+        public Customer GetCustomer(string name)
+        {
+            return _repo.GetCustomer(name);
+        }
+
+        public List<Inventory> GetInventoriesByStoreId(int storeId)
+        {
+            return _repo.GetInventoriesByStoreId(storeId);
         }
     }
 }

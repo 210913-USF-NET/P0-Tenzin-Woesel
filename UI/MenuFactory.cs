@@ -25,12 +25,14 @@ namespace UI
                     return new CurrentUserMenu(new BL(new DBCustomerRepo(context)));
                 case "new user":
                     return new NewUserMenu(new BL(new DBCustomerRepo(context)));
-                case "order menu":
+                case "welcome menu":
                     return new WelcomeMenu(new BL(new DBCustomerRepo(context)), new StoreService());
                 case "admin":
-                    return new AdminMenu(new BL(new DBCustomerRepo(context)));
+                    return new AdminMenu(new BL(new DBCustomerRepo(context)), new StoreService());
                 case "location menu":
                     return new LocationMenu(new BL(new DBCustomerRepo(context)));
+                case "store":
+                    return new StoreMenu(new BL(new DBCustomerRepo(context)), new StoreService());
                 case "items":
                     return new LineItemMenu(new BL(new DBCustomerRepo(context)));
                 default:

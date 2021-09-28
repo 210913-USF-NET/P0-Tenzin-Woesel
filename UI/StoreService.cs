@@ -58,5 +58,29 @@ namespace UI
             }
 
         }
+
+        public Inventory SelectAnItem(string prompt, List<Inventory> inventories)
+        {
+        selectAnItem:
+            for (int i = 0; i < inventories.Count; i++)
+            {
+                Console.WriteLine($"[{i}] {inventories[i]}");
+            }
+
+            string input = Console.ReadLine();
+            int parsedInput;
+            bool parseSuccess = Int32.TryParse(input, out parsedInput);
+
+            if (parseSuccess && parsedInput >= 0 && parsedInput < inventories.Count)
+            {
+                return inventories[parsedInput];
+            }
+            else
+            {
+                Console.WriteLine("Invalid input.");
+                goto selectAnItem;
+            }
+
+        }
     }
 }

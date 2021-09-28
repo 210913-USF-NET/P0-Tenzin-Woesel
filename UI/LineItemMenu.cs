@@ -111,7 +111,7 @@ namespace UI
 
                 }
 
-                selectedProduct.LineItems.Add(itemToAdd);
+                
 
                 Product updatedProduct = _bl.UpdateProduct(selectedProduct);
 

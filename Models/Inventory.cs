@@ -7,6 +7,8 @@ namespace Models
 
         public int ProductID { get; set; }
         public int StoreID { get; set; }
+
+        public Product Product{ get; set; }
         public Inventory() { }
 
         public Inventory(int Id, int Quantity)

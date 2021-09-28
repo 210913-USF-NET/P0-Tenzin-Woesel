@@ -70,6 +70,9 @@ namespace UI
 
                 Console.WriteLine("You Selected " + selectedStore);
 
+                StaticService.currentStore = selectedStore; 
+                MenuFactory.GetMenu("store").Start();
+
         }
 
         private void RemoveItem()

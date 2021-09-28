@@ -45,31 +45,6 @@ namespace UI
                 }
             } while (!exit);
         }
-
-        /// <summary>
-        /// Sign into the account with user credentials
-        /// </summary>
-        private void CurrentCustomer()
-        {
-            //get the username and check if the username is in the database
-            Console.WriteLine("Please enter your username");
-            string userName = Console.ReadLine();
-
-            // List<Customer> currentCustomer = 
-
-            //Get the lists of customers from the DB and check if this Name is available
-            // List<Customer> customer = _bl.GetAllCustomers();
-
-            // if (customerNames.Contains(userName))
-            // {
-            //     // then show the list of items and let them add items to cart
-            // }
-            // foreach (Customer s in customer)
-            // {
-            //     Console.WriteLine(s);
-
-            // }
-        }
         
     }
 }

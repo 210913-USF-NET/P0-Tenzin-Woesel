@@ -50,11 +50,20 @@ namespace UI
             JustBorder();
             Console.WriteLine("Creating User\n");
             Customer cust = new Customer();
-
+        inputName:
             Console.WriteLine("Enter your name: ");
             string name = Console.ReadLine();
+            List<Customer> allCustomers = _bl.SearchCustomer(name);
             //if name is already in DB then promt user to give another name
-            cust.Name = name;
+            if (allCustomers == null || allCustomers.Count == 0)
+            {
+                cust.Name = name;
+            }
+            else
+            {
+                Console.WriteLine("Name in use already. Please enter another name.");
+                goto inputName;
+            }
 
             Console.WriteLine("\nEnter Address: ");
             string address = Console.ReadLine();
@@ -63,7 +72,6 @@ namespace UI
         inputEmail:
             Console.WriteLine("\nEnter Email Address :");
             string email = Console.ReadLine();
-            cust.Email = email;
             try
             {
                 cust.Email = email;
