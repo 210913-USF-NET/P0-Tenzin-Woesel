@@ -36,7 +36,9 @@ namespace DL
                 Id = orderToAdd.Id,
                 Total = (decimal)orderToAdd.Total,
                 CustomerId = orderToAdd.CustomerId,
-                StoreFrontId = orderToAdd.StoreFrontId
+                StoreFrontId = orderToAdd.StoreFrontId,
+                OrderDate = orderToAdd.OrderDate
+
             };
         }
 
@@ -112,13 +114,23 @@ namespace DL
         {
             Entity.Customer customerByName = _context.Customers.FirstOrDefault(s => s.Name == name);
 
-            return new Model.Customer()
+            if (customerByName == null)
             {
-                Id = customerByName.Id,
-                Name = customerByName.Name,
-                Address = customerByName.Address,
-                Email = customerByName.Email
-            };
+                return null;
+            }
+            else
+            {
+                Model.Customer returnedCustomer = new Model.Customer()
+                {
+                    Id = customerByName.Id,
+                    Name = customerByName.Name,
+                    Address = customerByName.Address,
+                    Email = customerByName.Email
+                };
+
+                return returnedCustomer;
+
+            }
         }
 
         public Model.Customer UpdateCustomer(Model.Customer customerToUpdate)
@@ -185,7 +197,10 @@ namespace DL
             return _context.Orders.Select(order => new Model.Order()
             {
                 Id = order.Id,
-                Total = (decimal)order.Total
+                Total = (decimal)order.Total,
+                OrderDate = order.OrderDate,
+                CustomerId = order.CustomerId,
+                StoreFrontId = order.StoreFrontId
             }).ToList();
         }
 
@@ -383,7 +398,8 @@ namespace DL
                 Id = orderToUpdate.Id,
                 Total = orderToUpdate.Total,
                 CustomerId = orderToUpdate.CustomerId,
-                StoreFrontId = orderToUpdate.StoreFrontId
+                StoreFrontId = orderToUpdate.StoreFrontId,
+                OrderDate = orderToUpdate.OrderDate
             };
 
             updateOrder = _context.Orders.Update(updateOrder).Entity;
@@ -395,7 +411,8 @@ namespace DL
                 Id = updateOrder.Id,
                 Total = (decimal)updateOrder.Total,
                 CustomerId = updateOrder.CustomerId,
-                StoreFrontId = updateOrder.StoreFrontId
+                StoreFrontId = updateOrder.StoreFrontId,
+                OrderDate = orderToUpdate.OrderDate
             };
         }
 

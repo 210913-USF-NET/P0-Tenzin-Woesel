@@ -33,7 +33,28 @@ namespace Models
                     • List of Orders
         */
         public int Id { get; set; }
-        public string Name { get; set; }
+
+        private string _name;
+        public string Name 
+        { 
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if (value.Length == 0)
+                {
+                    InputInvalidException e = new InputInvalidException("Name should not be empty");
+                    Log.Warning(e.Message);
+                    throw e;
+                }
+                else
+                {
+                    _name = value;
+                }
+            }
+        }
 
         public string Address { get; set; }
 

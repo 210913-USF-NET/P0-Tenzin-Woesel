@@ -45,22 +45,34 @@ namespace UI
 
         private void ValidateUser()
         {
+        enterName:
             Console.WriteLine("Enter your name");
             string cName = Console.ReadLine();
+            List<Customer> customers = _bl.SearchCustomer(cName);
 
-            Customer realCustomer = _bl.GetCustomer(cName);
-
-            if (realCustomer == null && realCustomer.Equals(""))
+            if (customers == null && customers.Equals(""))
             {
                 Console.WriteLine("No such users :/");
-                return;
+                goto enterName;
             }
+            else
+            {
+                
 
-            Console.WriteLine("Welcome to your profile. " + realCustomer.Name);
+                Customer realCustomer = _bl.GetCustomer(cName);
 
-            StaticService.currentCustomer = realCustomer;
+                if (realCustomer == null)
+                {
+                    Console.WriteLine("No user by that name. Please enter your user name or create an account.");
+                    return;
+                }
 
-            MenuFactory.GetMenu("welcome menu").Start();
+                Console.WriteLine("Welcome to your profile : " + realCustomer.Name);
+
+                StaticService.currentCustomer = realCustomer;
+
+                MenuFactory.GetMenu("welcome menu").Start();
+            }
         }
     }
 }

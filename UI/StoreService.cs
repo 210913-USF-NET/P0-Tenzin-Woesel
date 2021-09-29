@@ -64,9 +64,9 @@ namespace UI
         selectAnItem:
             for (int i = 0; i < inventories.Count; i++)
             {
-                Console.WriteLine($"[{i}] {inventories[i]}");
+                Console.WriteLine($"[{i}] {inventories[i]} ");
             }
-
+            Console.WriteLine(prompt);
             string input = Console.ReadLine();
             int parsedInput;
             bool parseSuccess = Int32.TryParse(input, out parsedInput);

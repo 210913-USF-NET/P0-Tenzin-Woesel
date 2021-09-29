@@ -8,15 +8,16 @@ using System.Linq;
 using Microsoft.Data.SqlClient.Server;
 using System.Net.NetworkInformation;
 using Serilog;
+using System.ComponentModel;
 
 namespace UI
 {
     public class StoreMenu : IMenu
     {
-        private List<LineItems> items = new List<LineItems>();
         private IBL _bl;
 
         private StoreService _storeService;
+        private List<LineItems> items = new List<LineItems>();
 
         public StoreMenu(IBL bl, StoreService storeService)
         {
@@ -34,6 +35,7 @@ namespace UI
                 Console.WriteLine("[1] View Items");
                 Console.WriteLine("[2] Select Another Location");
                 Console.WriteLine("[3] Add item.");
+                Console.WriteLine("[4] Go back to previous menu.");
                 Console.WriteLine("[x] Back to Main Menu.");
                 userInput = Console.ReadLine();
 
@@ -50,10 +52,10 @@ namespace UI
                         AddItemToOrder();
                         break;
                     case "4":
-                        StartAnOrder();
+                        exit = true;
                         break;
                     case "x":
-                        Console.WriteLine("Go back");
+                        MenuFactory.GetMenu("main").Start();
                         exit = true;
                         break;
                     default:
@@ -70,7 +72,10 @@ namespace UI
             int storeId = StaticService.currentStore.Id;
             List<Inventory> inventories = _bl.GetInventoriesByStoreId(storeId);
 
-
+            // foreach (var i in inventories)
+            // {
+            //     System.Console.WriteLine(i);
+            // }
 
             List<Product> allProducts = _bl.GetAllProducts();
 
@@ -79,14 +84,16 @@ namespace UI
             //anonymous type containing both the products name and inventory id
             var tempInventory = from inv in inventories
                                 join prods in allProducts on inv.ProductID equals prods.Id
-                                select new { inv.ProductID, prods.Name, inv.Quantity, prods.Price, prods.Description };
+                                select new { inv.Id, inv.ProductID, prods.Name, inv.Quantity, prods.Price, prods.Description };
 
-            foreach (var inv in tempInventory)
+            foreach (var newIn in tempInventory)
             {
-                Console.WriteLine($"{inv.ProductID}");
-                Console.WriteLine("\nItem Name : " + inv.Name);
-                Console.WriteLine("Description : " + inv.Description);
-                Console.WriteLine($"Items left : {inv.Quantity}\n");
+
+                Console.WriteLine($"Inventory Id : {newIn.Id}");
+                Console.WriteLine($"Product Id : {newIn.ProductID}");
+                Console.WriteLine("Item Name : " + newIn.Name);
+                Console.WriteLine("Description : " + newIn.Description);
+                Console.WriteLine($"Items left : {newIn.Quantity}\n");
             }
 
         }
@@ -128,6 +135,7 @@ namespace UI
 
             int storeId = StaticService.currentStore.Id;
             List<Inventory> inventories = _bl.GetInventoriesByStoreId(storeId);
+            Console.WriteLine(" ===========================");
         selectAnItem:
             Inventory selectedItem = _storeService.SelectAnItem("Pick an item to add to order : ", inventories);
 
@@ -165,12 +173,25 @@ namespace UI
             {
                 decimal total = _bl.CalculateTotal(currentOrder);
 
+                List<Product> allProducts = _bl.GetAllProducts();
                 currentOrder.Total = total;
+                var tempItems = from i in items
+                                join p in allProducts on i.ProductId equals p.Id
+                                select new { p.Name, p.Description, i.Quantity };
+                Console.WriteLine("Your order contains: ");
+                foreach (var newInv in tempItems)
+                {
+                    Console.WriteLine("Item Name: " + newInv.Name);
+                    Console.WriteLine("Quantity: " + newInv.Quantity);
+                }
                 Console.WriteLine("Total is : " + total);
+                Console.WriteLine("================");
                 //update the order, product and item to repo.
                 _bl.UpdateInventory(selectedItem);
                 _bl.UpdateOrder(currentOrder);
                 Log.Information("Order placed successfully");
+                Console.WriteLine("Thank you for shopping with us.");
+                currentOrder = new Order();
                 int id = currentOrder.Id;
                 List<LineItems> toDisplayToUser = _bl.GetLineItems();
             }

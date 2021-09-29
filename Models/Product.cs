@@ -1,11 +1,32 @@
 using System.Collections.Generic;
+using Serilog;
 
 namespace Models
 {
     public class Product
     {
+        private string _name;
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name 
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if (value.Length == 0)
+                {
+                    InputInvalidException e = new InputInvalidException("Product Name should not be empty");
+                    Log.Warning(e.Message);
+                    throw e;
+                }
+                else
+                {
+                    _name = value;
+                }
+            }
+         }
 
         public decimal Price { get; set; }
 

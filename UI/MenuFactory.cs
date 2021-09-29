@@ -35,6 +35,8 @@ namespace UI
                     return new StoreMenu(new BL(new DBCustomerRepo(context)), new StoreService());
                 case "items":
                     return new LineItemMenu(new BL(new DBCustomerRepo(context)));
+                case "profile":
+                    return new ProfileMenu(new BL(new DBCustomerRepo(context)), new StoreService());
                 default:
                     return null;
             }

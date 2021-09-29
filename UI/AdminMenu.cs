@@ -155,13 +155,31 @@ namespace UI
         private void RestockInventory()
         {
             List<StoreFront> allStores = _bl.GetAllStores();
+            if(allStores == null && allStores.Equals(""))
+            {
+                Console.WriteLine("You don't have a store yet.");
+            }
+
             StoreFront store = _storeService.SelectAStore("Select a store to update inventory", allStores);
 
             List<Inventory> allInventories = _bl.GetInventoriesByStoreId(store.Id);
 
+            if(allInventories == null || allInventories.Equals(""))
+            {
+                Console.WriteLine("Empty inventory. Stop being lazy and do the inventories.");
+            }
+
             Inventory selectedItem = _storeService.SelectAnItem("Select the inventory to restock", allInventories);
-            Console.WriteLine(selectedItem.Product.Name);
-            Console.WriteLine("");
+            Console.WriteLine(selectedItem);
+
+            Console.WriteLine("How many quantity do you want to add?");
+            int quantity = Int32.Parse(Console.ReadLine());
+
+            selectedItem.Quantity += quantity;
+
+            _bl.UpdateInventory(selectedItem);
+
+            Console.WriteLine("Inventory successfully updated.");
             
         }
     }

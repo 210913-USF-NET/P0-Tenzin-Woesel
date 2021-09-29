@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Security;
+using Microsoft.VisualBasic;
 
 namespace Models
 {
@@ -11,6 +13,8 @@ namespace Models
         public int CustomerId { get; set; }
 
         public int StoreFrontId { get; set; }
+
+        public DateTime OrderDate { get; set; }
         public List<LineItems> LineItems { get; set; }
 
         public decimal Total { get; set; }
@@ -33,7 +37,14 @@ namespace Models
 
         public override string ToString()
         {
-            return $"Total Price: {this.Total}\n LineItems: {this.LineItems}";
+            // string temp = $"Total Price: {this.Total}\n";
+            // foreach (LineItems item in LineItems)
+            // {
+            //     temp += $" Quantity : {item.Quantity}";
+            // }
+            // return temp;
+            return $"Order Id: {this.Id}\nTotal Price: {this.Total}\nDate Ordered: {this.OrderDate}";
         }
+
     }
 }

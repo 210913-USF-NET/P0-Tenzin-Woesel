@@ -26,7 +26,7 @@ namespace UI
             {
                 Console.WriteLine("What would you like to do?");
                 Console.WriteLine("[1] Browse items.");
-                Console.WriteLine("[2] View Cart.");
+                Console.WriteLine("[2] View your profile.");
                 Console.WriteLine("[x] Go Back");
                 userInput = Console.ReadLine();
                 switch (userInput)
@@ -35,13 +35,7 @@ namespace UI
                         selectALocation();
                         break;
                     case "2":
-                        RemoveItem();
-                        break;
-                    case "3":
-                        ViewCart();
-                        break;
-                    case "4":
-                        CheckOut();
+                        MenuFactory.GetMenu("profile").Start();
                         break;
                     case "x":
                         goBack = true;
@@ -75,24 +69,11 @@ namespace UI
 
         }
 
-        private void RemoveItem()
-        {
+       private void goToProfile()
+       {
+           
+       }
 
-        }
-
-        private void ViewCart()
-        {
-
-        }
-        private void CheckOut()
-        {
-
-        }
-
-        private List<Product> ListOfItems()
-        {
-            //Bring in the lists of items from DL
-            return new List<Product>();
-        }
+        
     }
 }

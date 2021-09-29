@@ -34,6 +34,8 @@ namespace Tests
                 Assert.Equal(1, customers.Count);
             }
         }
+
+        
         [Fact]
         public void AddingCustomerShouldAddACustomer()
         {

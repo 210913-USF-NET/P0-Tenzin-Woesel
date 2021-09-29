@@ -16,6 +16,7 @@ namespace DL.Entities
         public decimal? Total { get; set; }
         public int CustomerId { get; set; }
         public int StoreFrontId { get; set; }
+        public DateTime OrderDate { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual StoreFront StoreFront { get; set; }
