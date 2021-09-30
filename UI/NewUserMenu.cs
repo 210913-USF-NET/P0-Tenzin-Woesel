@@ -38,6 +38,9 @@ namespace UI
                         Console.WriteLine("Go to main menu.");
                         exit = true;
                         break;
+                    case "admin":
+                        MenuFactory.GetMenu("admin").Start();
+                        break;
                     default:
                         Console.WriteLine("Ivalid input.");
                         break;
@@ -85,7 +88,7 @@ namespace UI
             Customer addedCustomer = _bl.AddCustomer(cust);
             JustBorder();
             Console.WriteLine($"\nYou created {addedCustomer}");
-            Log.Information("Customer created");
+            Log.Information("Customer created successfully.");
             JustBorder();
 
             MenuFactory.GetMenu("current user").Start();

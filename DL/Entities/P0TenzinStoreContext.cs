@@ -33,17 +33,14 @@ namespace DL.Entities
                 entity.ToTable("Customer");
 
                 entity.Property(e => e.Address)
-                    .IsRequired()
                     .HasMaxLength(25)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Email)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
-                    .IsRequired()
                     .HasMaxLength(25)
                     .IsUnicode(false);
             });
@@ -55,12 +52,12 @@ namespace DL.Entities
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Inventories)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__Inventory__Produ__41EDCAC5");
+                    .HasConstraintName("FK__Inventory__Produ__02925FBF");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.Inventories)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__Inventory__Store__40F9A68C");
+                    .HasConstraintName("FK__Inventory__Store__019E3B86");
             });
 
             modelBuilder.Entity<LineItem>(entity =>
@@ -68,12 +65,12 @@ namespace DL.Entities
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.LineItems)
                     .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK__LineItems__Order__45BE5BA9");
+                    .HasConstraintName("FK__LineItems__Order__0662F0A3");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.LineItems)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__LineItems__Produ__44CA3770");
+                    .HasConstraintName("FK__LineItems__Produ__056ECC6A");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -89,12 +86,12 @@ namespace DL.Entities
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__Order__CustomerI__3A4CA8FD");
+                    .HasConstraintName("FK__Order__CustomerI__7BE56230");
 
                 entity.HasOne(d => d.StoreFront)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.StoreFrontId)
-                    .HasConstraintName("FK__Order__StoreFron__3B40CD36");
+                    .HasConstraintName("FK__Order__StoreFron__7CD98669");
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -110,7 +107,6 @@ namespace DL.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
-                    .IsRequired()
                     .HasMaxLength(25)
                     .IsUnicode(false);
 
@@ -122,12 +118,10 @@ namespace DL.Entities
                 entity.ToTable("StoreFront");
 
                 entity.Property(e => e.Address)
-                    .IsRequired()
                     .HasMaxLength(25)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });

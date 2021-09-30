@@ -54,6 +54,9 @@ namespace UI
                     case "4":
                         exit = true;
                         break;
+                    case "admin":
+                        MenuFactory.GetMenu("admin").Start();
+                        break;
                     case "x":
                         MenuFactory.GetMenu("main").Start();
                         exit = true;
@@ -172,6 +175,8 @@ namespace UI
             else
             {
                 decimal total = _bl.CalculateTotal(currentOrder);
+                // decimal newHowMany = Decimal.Parse(moreItems);
+                // total = total * newHowMany;
 
                 List<Product> allProducts = _bl.GetAllProducts();
                 currentOrder.Total = total;
@@ -192,8 +197,10 @@ namespace UI
                 Log.Information("Order placed successfully");
                 Console.WriteLine("Thank you for shopping with us.");
                 currentOrder = new Order();
-                int id = currentOrder.Id;
-                List<LineItems> toDisplayToUser = _bl.GetLineItems();
+                Console.WriteLine("Press enter to continue.");
+                Console.ReadLine();
+                // int id = currentOrder.Id;
+                // List<LineItems> toDisplayToUser = _bl.GetLineItems();
             }
 
         }

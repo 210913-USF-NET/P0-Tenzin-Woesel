@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Data.Common;
 using System.Threading.Tasks;
-using Models;
 
 namespace DL
 {
@@ -37,8 +36,7 @@ namespace DL
                 Total = (decimal)orderToAdd.Total,
                 CustomerId = orderToAdd.CustomerId,
                 StoreFrontId = orderToAdd.StoreFrontId,
-                OrderDate = orderToAdd.OrderDate
-
+                OrderDate = (DateTime)orderToAdd.OrderDate
             };
         }
 
@@ -198,7 +196,7 @@ namespace DL
             {
                 Id = order.Id,
                 Total = (decimal)order.Total,
-                OrderDate = order.OrderDate,
+                OrderDate = (DateTime)order.OrderDate,
                 CustomerId = order.CustomerId,
                 StoreFrontId = order.StoreFrontId
             }).ToList();
@@ -218,7 +216,6 @@ namespace DL
         {
             return _context.Inventories.Include("Product").Select(inventory => new Model.Inventory()
             {
-                Id = inventory.Id,
                 Quantity = (int)inventory.Quantity,
                 ProductID = (int)inventory.ProductId,
                 StoreID = (int)inventory.StoreId,
@@ -227,7 +224,7 @@ namespace DL
                     Id = inventory.Product.Id,
                     Name = inventory.Product.Name,
                     Description = inventory.Product.Description,
-                    Price = inventory.Product.Price,
+                    Price = (decimal)inventory.Product.Price,
                     Category = inventory.Product.Category
                 }
             }).ToList();
@@ -304,7 +301,7 @@ namespace DL
         {
             Entity.LineItem itemToAdd = new Entity.LineItem()
             {
-                Quantity = (int?)lineItems.Quantity,
+                Quantity = (int)lineItems.Quantity,
                 ProductId = lineItems.ProductId,
                 OrderId = lineItems.OrderId
             };
@@ -363,7 +360,7 @@ namespace DL
             {
                 Id = productById.Id,
                 Name = productById.Name,
-                Price = productById.Price,
+                Price = (decimal)productById.Price,
                 Description = productById.Description,
                 Category = productById.Category
             };
@@ -385,7 +382,7 @@ namespace DL
 
             return new Model.Inventory()
             {
-                Id = updateInventory.Id,
+                // Id = updateInventory.Id,
                 StoreID = (int)updateInventory.StoreId,
                 ProductID = (int)updateInventory.ProductId
             };
@@ -415,13 +412,5 @@ namespace DL
                 OrderDate = orderToUpdate.OrderDate
             };
         }
-
-        // public List<Model.LineItems> AddLineItems(List<LineItems> lineItems)
-        // {
-        //     return _context.LineItems.Select(newInv => new Model.LineItems())
-        //     {
-        //         Id = newInv.
-        //     }
-        // }
     }
 }

@@ -59,6 +59,10 @@ namespace Tests
             Assert.Throws<InputInvalidException>(() => test.Email = email);
         }
 
+        // [Fact]
+        // [InlineData("")]
+        // public void 
+
         
     }
 }

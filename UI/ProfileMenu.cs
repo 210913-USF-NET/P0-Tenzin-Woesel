@@ -39,6 +39,10 @@ namespace UI
                         GetDetails();
                         break;
                     case "3":
+                        goBack = true;
+                        break;
+                    case "admin":
+                        MenuFactory.GetMenu("admin").Start();
                         break;
                     case "x":
                         goBack = true;

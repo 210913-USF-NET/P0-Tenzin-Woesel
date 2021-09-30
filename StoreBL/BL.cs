@@ -85,7 +85,12 @@ namespace StoreBL
             {
                 int productId = item.ProductId;
                 Product product = _repo.GetProductById(productId);
+
                 total += product.Price;
+                if(item.Quantity > 1)
+                {
+                    total *= item.Quantity;
+                }
             
             }
 

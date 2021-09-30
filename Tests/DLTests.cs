@@ -60,86 +60,86 @@ namespace Tests
                 Entity.Customer custo = context.Customers.FirstOrDefault(c => c.Id ==1);
 
                 Assert.NotNull(custo);
-                Assert.Equal(custo.Name, "Tenzin");
-                Assert.Equal(custo.Address, "234 City");
+                Assert.Equal("Tenzin", custo.Name);
+                Assert.Equal("234 City", custo.Address);
             }
 
 
         }
-
-        public void AddingOrderToACustomer()
-        {
-            Models.Order orderToAdd;
-            using(var context =  new Entity.P0TenzinStoreContext(options))
-            {
+        // [Fact]
+        // public void AddingOrderToACustomer()
+        // {
+        //     Models.Order orderToAdd;
+        //     using(var context =  new Entity.P0TenzinStoreContext(options))
+        //     {
                 
-                ICustomerRepo repo = new DBCustomerRepo(context);
+        //         ICustomerRepo repo = new DBCustomerRepo(context);
 
-                Models.Customer custToAdd = new Models.Customer()
-                {
-                    Id = 1,
-                    Name = "Tenzin",
-                    Address = "234 City",
-                    Email = "hr@net.com"
-                };
+        //         Models.Customer custToAdd = new Models.Customer()
+        //         {
+        //             Id = 1,
+        //             Name = "Tenzin",
+        //             Address = "234 City",
+        //             Email = "hr@net.com"
+        //         };
 
-                custToAdd = repo.AddCustomer(custToAdd);
+        //         custToAdd = repo.AddCustomer(custToAdd);
 
-                Models.StoreFront storeFront = new Models.StoreFront()
-                {
-                    Id = 1,
-                    Name = "SLS 2",
-                    Address = "123 NY"
-                };
+        //         Models.StoreFront storeFront = new Models.StoreFront()
+        //         {
+        //             Id = 1,
+        //             Name = "SLS 2",
+        //             Address = "123 NY"
+        //         };
 
-                storeFront = repo.AddStore(storeFront);
+        //         storeFront = repo.AddStore(storeFront);
                 
-                Models.Product product = new Models.Product()
-                {
-                    Id = 1,
-                    Name = "Sofa",
-                    Price = 100.99M,
-                    Description = "Head rest chair",
-                    Category = "Chair"
-                };
+        //         Models.Product product = new Models.Product()
+        //         {
+        //             Id = 1,
+        //             Name = "Sofa",
+        //             Price = 100.99M,
+        //             Description = "Head rest chair",
+        //             Category = "Chair"
+        //         };
 
-                // product = repo.Ad
+        //         // product = repo.Ad
 
-                Models.LineItems items = new Models.LineItems()
-                {
-                    Id = 1,
-                    Quantity = 4,
-                    ProductId = product.Id
-                };
+        //         Models.LineItems items = new Models.LineItems()
+        //         {
+        //             Id = 1,
+        //             Quantity = 4,
+        //             ProductId = product.Id
+        //         };
 
-                List<LineItems> lineItems = new List<LineItems>();
-                lineItems.Add(items);
+        //         List<LineItems> lineItems = new List<LineItems>();
+        //         lineItems.Add(items);
 
 
-                orderToAdd = new Models.Order()
-                {
-                    Id =1,
-                    Total = 100.99M,
-                    StoreFrontId = storeFront.Id,
-                    CustomerId = custToAdd.Id,
-                    LineItems = lineItems
-                };
+        //         orderToAdd = new Models.Order()
+        //         {
+        //             Id =1,
+        //             Total = 100.99M,
+        //             StoreFrontId = storeFront.Id,
+        //             CustomerId = custToAdd.Id,
+        //             LineItems = lineItems
+        //         };
 
-                orderToAdd = repo.AddAnOrder(orderToAdd);
-            }
+        //         orderToAdd = repo.AddAnOrder(orderToAdd);
+        //     }
 
-            using (var context = new Entity.P0TenzinStoreContext(options))
-            {
-                //ASSERT
-                Entity.Customer custo = context.Customers.FirstOrDefault(c => c.Id == 1);
+        //     using (var context = new Entity.P0TenzinStoreContext(options))
+        //     {
+        //         //ASSERT
+        //         Entity.Customer custo = context.Customers.FirstOrDefault(c => c.Id == 1);
 
-                Assert.NotNull(custo);
-                Assert.Equal(custo.Name, "Tenzin");
-                Assert.Equal(custo.Id, 1);
-                Assert.Equal(custo.Address, "234 City");
-                // Assert.Equal(custo.Orders.Contains(orderToAdd));
-            }
-        }
+        //         Assert.NotNull(custo);
+        //         Assert.Equal(custo.Name, "Tenzin");
+        //         Assert.Equal(custo.Id, 1);
+        //         Assert.Equal(custo.Address, "234 City");
+        //         // Assert.Equal(custo.Orders.Contains(orderToAdd));
+        //     }
+        // }
 
         private void Seed()
         {

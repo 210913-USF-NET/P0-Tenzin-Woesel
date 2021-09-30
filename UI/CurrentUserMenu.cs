@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using StoreBL;
 using Models;
+using Serilog;
 
 namespace UI
 {
